@@ -1,0 +1,18 @@
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ensures the wrapper covers the full viewport height */
+}
+
+/* Main content */
+.main-content {
+  margin-top: 56px; /* Same as the header height */
+
+  flex: 1; /* Pushes the footer to the bottom when there is not enough content */
+}
+a {
+  text-decoration: none;
+}
+body {
+  overflow-x: hidden;
+}
