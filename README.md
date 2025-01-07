@@ -1,6 +1,14 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 # sense
 =======
+=======
+=======
+<<<<<<< HEAD
+# sense
+=======
+>>>>>>> 715ac9b (Initial commit)
+>>>>>>> 81dd980 (Initial commit)
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
@@ -51,4 +59,11 @@ export default tseslint.config({
   },
 })
 ```
+<<<<<<< HEAD
 >>>>>>> a0ae635 (Initial commit)
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> a0ae635 (Initial commit)
+>>>>>>> 715ac9b (Initial commit)
+>>>>>>> 81dd980 (Initial commit)
