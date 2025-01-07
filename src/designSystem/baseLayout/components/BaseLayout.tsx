@@ -3,7 +3,6 @@ import ScrollToTop from "./ScrollToTop";
 import { Header } from "./Header";
 import Affixx from "./Affix";
 import { FooterLinks } from "./FooterLinks";
-import { Drawer } from "@mantine/core";
 
 export default function BaseLayout() {
   return (
