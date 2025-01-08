@@ -1,19 +1,24 @@
-import { precacheAndRoute } from "workbox-precaching";
+const cacheName = "your-cache-name";
+const assetsToCache = [
+  "/assets/dd.jpg",
+  "/assets/gg.jpg",
+  "/assets/image.9a65bd94.svg",
+  "/assets/image.b0c2306b.svg",
+  // add other assets here
+];
 
-// const CACHE_NAME = "workbox-preCache-v2";
+self.addEventListener("install", (event: any) => {
+  event.waitUntil(
+    caches.open(cacheName).then((cache) => {
+      return cache.addAll(assetsToCache);
+    })
+  );
+});
 
-// self.addEventListener("install", (event: any) => {
-//   event.waitUntil(
-//     caches.open(CACHE_NAME).then((cache) => {
-//       return cache.addAll([
-//         "/assets/dd.jpg",
-//         "/assets/gg.jpg",
-//         "/assets/image.9a65bd94.svg",
-//         "/assets/image.b0c2306b.svg",
-//         "/assets/images.jpg",
-//       ]);
-//     })
-//   );
-// });
-
-precacheAndRoute(self.__WB_MANIFEST);
+self.addEventListener("fetch", (event: any) => {
+  event.respondWith(
+    caches.match(event.request).then((cachedResponse) => {
+      return cachedResponse || fetch(event.request);
+    })
+  );
+});
