@@ -13,7 +13,7 @@ const ASSETS_TO_CACHE = [
 self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      console.log("Caching essential assets...");
+      console.log("Caching assets...");
       return cache.addAll(ASSETS_TO_CACHE);
     })
   );
@@ -23,40 +23,16 @@ self.addEventListener("install", (event) => {
 // Fetch event - Serve cached resources and provide fallbacks
 self.addEventListener("fetch", (event) => {
   event.respondWith(
-    caches.match(event.request).then((cachedResponse) => {
-      // Serve from cache if available
-      if (cachedResponse) {
-        return cachedResponse;
-      }
-
-      // Fallback to network fetch
-      return fetch(event.request)
-        .then((networkResponse) => {
-          if (
-            event.request.method === "GET" &&
-            event.request.destination !== "document"
-          ) {
-            // Optionally cache network responses for future use
-            return caches.open(CACHE_NAME).then((cache) => {
-              cache.put(event.request, networkResponse.clone());
-              return networkResponse;
-            });
-          }
-          return networkResponse;
-        })
-        .catch(() => {
-          // Handle offline errors with specific fallbacks
-          if (event.request.destination === "image") {
-            return caches.match("/assets/images.jpg"); // Valid fallback image
-          }
-          if (event.request.destination === "document") {
-            return caches.match("/index.html"); // Fallback for HTML files
-          }
-          return new Response("Resource unavailable", {
-            status: 404,
-            statusText: "Not Found",
+    caches.match(event.request).then((response) => {
+      return (
+        response ||
+        fetch(event.request).then((networkResponse) => {
+          return caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, networkResponse.clone());
+            return networkResponse;
           });
-        });
+        })
+      );
     })
   );
 });
@@ -69,11 +45,11 @@ self.addEventListener("activate", (event) => {
       Promise.all(
         cacheNames.map((cacheName) => {
           if (!cacheWhitelist.includes(cacheName)) {
-            return caches.delete(cacheName); // Delete outdated caches
+            return caches.delete(cacheName); // Remove old caches only.
           }
         })
       )
     )
   );
-  self.clients.claim();
+  self.clients.claim(); // Ensure the service worker takes control immediately.
 });

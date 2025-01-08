@@ -9,7 +9,7 @@ export default defineConfig({
       registerType: "autoUpdate", // Automatically updates the service worker
       injectRegister: "auto", // Automatically injects the service worker script
       workbox: {
-        globPatterns: ["**/*.{js,css,html,png,jpg,svg,webmanifest}"], // Include all asset types
+        globPatterns: ["**/*.{js,css,html,png,jpg,svg,webmanifest}"],
       },
       manifest: {
         name: "SENSE",
