@@ -6,10 +6,10 @@ const ASSETS_TO_CACHE = [
   "/assets/image.9a65bd94.svg",
   "/assets/image.b0c2306b.svg",
   "/assets/images.jpg",
-  "/vite.svg", // Add any other assets here
+  "/vite.svg", // Add additional static assets if needed
 ];
 
-// Install event - Cache assets
+// Install event - Cache essential assets
 self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
@@ -24,25 +24,34 @@ self.addEventListener("install", (event) => {
 self.addEventListener("fetch", (event) => {
   event.respondWith(
     caches.match(event.request).then((cachedResponse) => {
+      // Serve from cache if available
       if (cachedResponse) {
-        return cachedResponse; // Serve from cache if available
+        return cachedResponse;
       }
 
-      // Try network fetch and handle failures
+      // Fallback to network fetch
       return fetch(event.request)
         .then((networkResponse) => {
-          return networkResponse; // Serve from network
+          if (
+            event.request.method === "GET" &&
+            event.request.destination !== "document"
+          ) {
+            // Optionally cache network responses for future use
+            return caches.open(CACHE_NAME).then((cache) => {
+              cache.put(event.request, networkResponse.clone());
+              return networkResponse;
+            });
+          }
+          return networkResponse;
         })
         .catch(() => {
-          // Handle offline errors
+          // Handle offline errors with specific fallbacks
           if (event.request.destination === "image") {
-            // Fallback for images
-            return caches.match("/assets/images.jpg"); // Replace with a valid fallback image path
-          } else if (event.request.destination === "document") {
-            // Fallback for HTML
-            return caches.match("/index.html");
+            return caches.match("/assets/images.jpg"); // Valid fallback image
           }
-          // Default fallback (optional)
+          if (event.request.destination === "document") {
+            return caches.match("/index.html"); // Fallback for HTML files
+          }
           return new Response("Resource unavailable", {
             status: 404,
             statusText: "Not Found",
@@ -60,7 +69,7 @@ self.addEventListener("activate", (event) => {
       Promise.all(
         cacheNames.map((cacheName) => {
           if (!cacheWhitelist.includes(cacheName)) {
-            return caches.delete(cacheName); // Remove old caches
+            return caches.delete(cacheName); // Delete outdated caches
           }
         })
       )

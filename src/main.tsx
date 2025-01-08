@@ -62,7 +62,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     navigator.serviceWorker
-      .register("/custom-sw.js") // Make sure the path to the service worker is correct
+      .register("/custom-sw.js") // Ensure the path matches your deployment
       .then((registration) => {
         console.log(
           "Service Worker registered with scope:",
@@ -70,7 +70,7 @@ if ("serviceWorker" in navigator) {
         );
       })
       .catch((error) => {
-        console.log("Service Worker registration failed:", error);
+        console.error("Service Worker registration failed:", error);
       });
   });
 }

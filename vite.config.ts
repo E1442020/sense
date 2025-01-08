@@ -8,8 +8,11 @@ export default defineConfig({
     VitePWA({
       registerType: "autoUpdate", // Automatically updates the service worker
       injectRegister: "auto", // Automatically injects the service worker script
+      workbox: {
+        globPatterns: ["**/*.{js,css,html,svg,jpg,png}"], // Adjust patterns to cache relevant assets
+      },
       manifest: {
-        name: "My PWA", // App name
+        name: "My PWA",
         short_name: "PWA",
         description: "A sample PWA",
         theme_color: "#ffffff",
@@ -17,7 +20,7 @@ export default defineConfig({
         start_url: "/",
         icons: [
           {
-            src: "/icons/icon-192x192.png", // Make sure these paths are correct
+            src: "/icons/icon-192x192.png",
             sizes: "192x192",
             type: "image/png",
           },
