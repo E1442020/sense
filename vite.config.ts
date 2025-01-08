@@ -6,10 +6,10 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
-      registerType: "autoUpdate",
-      injectRegister: "auto",
+      registerType: "autoUpdate", // Automatically updates the service worker
+      injectRegister: "auto", // Automatically injects the service worker script
       manifest: {
-        name: "My PWA",
+        name: "My PWA", // App name
         short_name: "PWA",
         description: "A sample PWA",
         theme_color: "#ffffff",
@@ -17,12 +17,12 @@ export default defineConfig({
         start_url: "/",
         icons: [
           {
-            src: "icons/icon-192x192.png",
+            src: "/icons/icon-192x192.png", // Make sure these paths are correct
             sizes: "192x192",
             type: "image/png",
           },
           {
-            src: "icons/icon-512x512.png",
+            src: "/icons/icon-512x512.png",
             sizes: "512x512",
             type: "image/png",
           },
