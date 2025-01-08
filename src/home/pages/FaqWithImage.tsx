@@ -2,9 +2,6 @@ import { Accordion, Container, Grid, Image, Title } from "@mantine/core";
 import image from "../../assets/image.b0c2306b.svg";
 import classes from "../styles/FaqWithImage.module.css";
 
-const placeholder =
-  "It can’t help but hear a pin drop from over half a mile away, so it lives deep in the mountains where there aren’t many people or Pokémon.";
-
 export function FaqWithImage() {
   return (
     <div className={classes.wrapper}>
@@ -20,35 +17,49 @@ export function FaqWithImage() {
 
             <Accordion
               chevronPosition="right"
-              defaultValue="reset-password"
+              defaultValue="ai-coach"
               variant="separated"
             >
-              <Accordion.Item className={classes.item} value="reset-password">
+              <Accordion.Item className={classes.item} value="ai-coach">
                 <Accordion.Control>
-                  How can I reset my password?
+                  How does the AI coach provide recommendations?
                 </Accordion.Control>
-                <Accordion.Panel>{placeholder}</Accordion.Panel>
+                <Accordion.Panel>
+                  Our AI coach analyzes your learning preferences, progress, and
+                  goals to provide personalized recommendations for courses and
+                  study plans.
+                </Accordion.Panel>
               </Accordion.Item>
 
-              <Accordion.Item className={classes.item} value="another-account">
+              <Accordion.Item className={classes.item} value="course-access">
                 <Accordion.Control>
-                  Can I create more that one account?
+                  Can I access courses offline?
                 </Accordion.Control>
-                <Accordion.Panel>{placeholder}</Accordion.Panel>
+                <Accordion.Panel>
+                  Yes, you can download course content for offline access, so
+                  you can learn anytime, anywhere.
+                </Accordion.Panel>
               </Accordion.Item>
 
-              <Accordion.Item className={classes.item} value="newsletter">
+              <Accordion.Item className={classes.item} value="certificates">
                 <Accordion.Control>
-                  How can I subscribe to monthly newsletter?
+                  Do I get certificates after completing a course?
                 </Accordion.Control>
-                <Accordion.Panel>{placeholder}</Accordion.Panel>
+                <Accordion.Panel>
+                  Absolutely! After completing a course, you will receive a
+                  certificate of achievement that you can share on your resume
+                  or social media.
+                </Accordion.Panel>
               </Accordion.Item>
 
-              <Accordion.Item className={classes.item} value="credit-card">
+              <Accordion.Item className={classes.item} value="subscription">
                 <Accordion.Control>
-                  Do you store credit card information securely?
+                  What subscription plans are available?
                 </Accordion.Control>
-                <Accordion.Panel>{placeholder}</Accordion.Panel>
+                <Accordion.Panel>
+                  We offer monthly and yearly subscription plans with unlimited
+                  access to all courses and AI coaching features.
+                </Accordion.Panel>
               </Accordion.Item>
             </Accordion>
           </Grid.Col>

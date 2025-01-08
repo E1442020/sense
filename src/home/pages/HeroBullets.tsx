@@ -23,13 +23,13 @@ export function HeroBullets() {
         <Flex direction={mobile ? "column" : "row"} gap="lg">
           <Box className={classes.content} w={mobile ? "100%" : "48%"}>
             <Title className={classes.title}>
-              A <span className={classes.highlight}>modern</span> React <br />{" "}
-              components library
+              Unlock Your <span className={classes.highlight}>Potential</span>{" "}
+              with Sense Coach
             </Title>
             <Text c="dimmed" mt="md">
-              Build fully functional accessible web applications faster than
-              ever – Mantine includes more than 120 customizable components and
-              hooks to cover you in any situation
+              Transform your learning experience with AI-powered coaching and an
+              extensive library of expert-led courses. Learn smarter, not
+              harder.
             </Text>
 
             <List
@@ -43,22 +43,22 @@ export function HeroBullets() {
               }
             >
               <List.Item>
-                <b>TypeScript based</b> – build type safe applications, all
-                components and hooks export types
+                <b>Personalized AI Coaching</b> – Receive tailored advice and
+                recommendations to achieve your goals.
               </List.Item>
               <List.Item>
-                <b>Free and open source</b> – all packages have MIT license, you
-                can use Mantine in any project
+                <b>Diverse Course Library</b> – Explore hundreds of courses
+                across various fields taught by industry experts.
               </List.Item>
               <List.Item>
-                <b>No annoying focus ring</b> – focus ring will appear only when
-                user navigates with keyboard
+                <b>Progress Tracking</b> – Monitor your growth with detailed
+                insights and analytics.
               </List.Item>
             </List>
 
             <Group mt={30}>
               <Button radius="xl" size="md" className={classes.control}>
-                Get started
+                Start Learning
               </Button>
               <Button
                 variant="default"
@@ -66,10 +66,11 @@ export function HeroBullets() {
                 size="md"
                 className={classes.control}
               >
-                Source code
+                Explore Courses
               </Button>
             </Group>
           </Box>
+
           <Image
             src={image}
             className={classes.image}

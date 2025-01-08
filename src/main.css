@@ -1,3 +1,19 @@
+/* Global reset for box-sizing */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Prevent horizontal scrolling globally */
+html,
+body {
+  overflow-x: hidden; /* This prevents horizontal scroll */
+  margin: 0; /* Ensure no unwanted margin */
+  padding: 0; /* Ensure no unwanted padding */
+}
+
+/* Page wrapper ensures the layout works correctly */
 .page-wrapper {
   display: flex;
   flex-direction: column;
@@ -7,12 +23,10 @@
 /* Main content */
 .main-content {
   margin-top: 56px; /* Same as the header height */
-
   flex: 1; /* Pushes the footer to the bottom when there is not enough content */
+  overflow-x: hidden; /* Prevents horizontal overflow if any content inside it goes over */
 }
+
 a {
   text-decoration: none;
-}
-body {
-  overflow-x: hidden;
 }

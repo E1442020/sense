@@ -1,8 +1,8 @@
 import {
-  IconCircleDotted,
-  IconFileCode,
-  IconFlame,
-  IconReceiptOff,
+  IconBrain,
+  IconBook,
+  IconGauge,
+  IconChartDots,
 } from "@tabler/icons-react";
 import {
   Box,
@@ -18,28 +18,28 @@ import classes from "../styles/FeaturesTitle.module.css";
 
 const features = [
   {
-    icon: IconReceiptOff,
-    title: "Free and open source",
+    icon: IconBrain,
+    title: "AI-Powered Coaching",
     description:
-      "All packages are published under MIT license, you can use Mantine in any project",
+      "Get tailored learning paths and insights with advanced AI recommendations.",
   },
   {
-    icon: IconFileCode,
-    title: "TypeScript based",
+    icon: IconBook,
+    title: "Extensive Course Library",
     description:
-      "Build type safe applications, all components and hooks export types",
+      "Access a wide variety of courses across multiple disciplines, taught by experts.",
   },
   {
-    icon: IconCircleDotted,
-    title: "No annoying focus ring",
+    icon: IconGauge,
+    title: "Flexible Learning Pace",
     description:
-      "With new :focus-visible selector focus ring will appear only when user navigates with keyboard",
+      "Learn at your own speed with on-demand video content and progress tracking.",
   },
   {
-    icon: IconFlame,
-    title: "Flexible",
+    icon: IconChartDots,
+    title: "Actionable Insights",
     description:
-      "Customize colors, spacing, shadows, fonts and many other settings with global theme object",
+      "Track your progress and analyze your performance with detailed analytics.",
   },
 ];
 
@@ -50,7 +50,7 @@ export function FeaturesTitle() {
         size={44}
         radius="md"
         variant="gradient"
-        gradient={{ deg: 133, from: "violet", to: "cyan" }}
+        gradient={{ deg: 133, from: "violet", to: "blue" }}
       >
         <feature.icon size={26} stroke={1.5} />
       </ThemeIcon>
@@ -64,28 +64,27 @@ export function FeaturesTitle() {
   ));
 
   return (
-    <Box bg="gray.0" mt="9rem" mb="5rem">
+    <Box bg="gray.0" mt="8rem" mb="5rem">
       <Container size="lg">
         <div className={classes.wrapper}>
           <Grid gutter={80}>
             <Grid.Col span={{ base: 12, md: 5 }}>
               <Title className={classes.title} order={2}>
-                A fully featured React components library for your next project
+                Empower Your Learning with Sense Coach
               </Title>
               <Text c="dimmed">
-                Build fully functional accessible web applications faster than
-                ever – Mantine includes more than 120 customizable components
-                and hooks to cover you in any situation
+                Discover a smarter way to learn with AI-driven coaching and a
+                comprehensive course library designed for your growth.
               </Text>
 
               <Button
                 variant="gradient"
-                gradient={{ deg: 133, from: "violet", to: "cyan" }}
+                gradient={{ deg: 133, from: "violet", to: "blue" }}
                 size="lg"
                 radius="md"
                 mt="xl"
               >
-                Get started
+                Explore Features
               </Button>
             </Grid.Col>
             <Grid.Col span={{ base: 12, md: 7 }}>

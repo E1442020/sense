@@ -27,11 +27,13 @@ export default function CourcesCarousel() {
           name: "Howard Schultz",
           role: "Former Starbucks CEO",
           image: img1,
+          shortRole: "Starbucks CEO",
         },
         {
           name: "Elaine Welteroth",
           role: "Multimedia Icon",
           image: img2,
+          shortRole: "Product Manager",
         },
       ],
       callToAction: "Sign Up To Practice Live",
@@ -45,11 +47,13 @@ export default function CourcesCarousel() {
           name: "Melody Hobson",
           role: "President of Ariel Investments",
           image: img3,
+          shortRole: "Product Manager",
         },
         {
           name: "James Clear",
           role: "Author of Atomic Habits",
           image: img1,
+          shortRole: "Starbucks CEO",
         },
       ],
       callToAction: "Sign Up To Practice Live",
@@ -63,11 +67,13 @@ export default function CourcesCarousel() {
           name: "Susan Cain",
           role: "Author of Quiet",
           image: img3,
+          shortRole: "Starbucks CEO",
         },
         {
           name: "Adam Grant",
           role: "Organizational Psychologist",
           image: img2,
+          shortRole: "Product Manager",
         },
       ],
       callToAction: "Sign Up To Practice Live",
@@ -81,11 +87,13 @@ export default function CourcesCarousel() {
           name: "Howard Schultz",
           role: "Former Starbucks CEO",
           image: img1,
+          shortRole: "Starbucks CEO",
         },
         {
           name: "Elaine Welteroth",
           role: "Multimedia Icon",
           image: img3,
+          shortRole: "Starbucks CEO",
         },
       ],
       callToAction: "Sign Up To Practice Live",
@@ -99,11 +107,13 @@ export default function CourcesCarousel() {
           name: "Howard Schultz",
           role: "Former Starbucks CEO",
           image: img2,
+          shortRole: "Product Manager",
         },
         {
           name: "Elaine Welteroth",
           role: "Multimedia Icon",
           image: img3,
+          shortRole: "Starbucks CEO",
         },
       ],
       callToAction: "Sign Up To Practice Live",
@@ -130,7 +140,7 @@ export default function CourcesCarousel() {
         <Carousel
           draggable={false}
           slideSize={mobile ? "80%" : "40%"}
-          height={570}
+          height={mobile ? 600 : 570}
           align={mobile ? "start" : undefined}
           slideGap="md"
           withIndicators
@@ -226,11 +236,11 @@ export default function CourcesCarousel() {
                         />
                         <Text
                           size="xs"
-                          w={mobile ? "80%" : undefined}
+                          w={mobile ? "70%" : undefined}
                           c="dimmed"
                           tt={"uppercase"}
                         >
-                          {prof.role}
+                          {prof.shortRole}
                         </Text>
                       </Flex>
                     ))}
