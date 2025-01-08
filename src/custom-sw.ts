@@ -1,6 +1,6 @@
 import { precacheAndRoute } from "workbox-precaching";
 
-const CACHE_NAME = "your-cache-name-v1";
+const CACHE_NAME = "workbox-preCache-v2";
 
 self.addEventListener("install", (event: any) => {
   event.waitUntil(
