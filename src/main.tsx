@@ -58,3 +58,19 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     </DirectionProvider>
   </>
 );
+
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker
+      .register("/custom-sw.js") // Update this line to use your custom service worker
+      .then((registration) => {
+        console.log(
+          "Custom Service Worker registered with scope:",
+          registration.scope
+        );
+      })
+      .catch((error) => {
+        console.log("Service Worker registration failed:", error);
+      });
+  });
+}
