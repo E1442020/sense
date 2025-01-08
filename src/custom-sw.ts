@@ -1,3 +1,5 @@
+import { precacheAndRoute } from "workbox-precaching";
+
 const cacheName = "your-cache-name";
 const assetsToCache = [
   "/assets/dd.jpg",
@@ -22,3 +24,5 @@ self.addEventListener("fetch", (event: any) => {
     })
   );
 });
+
+precacheAndRoute(self.__WB_MANIFEST);
