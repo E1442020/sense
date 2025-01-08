@@ -62,10 +62,10 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     navigator.serviceWorker
-      .register("/custom-sw.js") // Update this line to use your custom service worker
+      .register("/custom-sw.js") // Make sure to use the correct path
       .then((registration) => {
         console.log(
-          "Custom Service Worker registered with scope:",
+          "Service Worker registered with scope:",
           registration.scope
         );
       })
