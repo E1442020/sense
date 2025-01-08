@@ -64,7 +64,7 @@ export function FeaturesTitle() {
   ));
 
   return (
-    <Box bg="gray.0" mb="xl">
+    <Box bg="gray.0" mt="9rem" mb="5rem">
       <Container size="lg">
         <div className={classes.wrapper}>
           <Grid gutter={80}>
