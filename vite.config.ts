@@ -12,10 +12,10 @@ export default defineConfig({
         globPatterns: ["**/*.{js,css,html,svg,jpg,png}"], // Adjust patterns to cache relevant assets
       },
       manifest: {
-        name: "My PWA",
-        short_name: "PWA",
-        description: "A sample PWA",
-        theme_color: "#ffffff",
+        name: "SENSE",
+        short_name: "SENSE",
+        description: "SENSE APP",
+        theme_color: "#571698",
         display: "standalone",
         start_url: "/",
         icons: [
