@@ -11,7 +11,7 @@ import {
   ThemeIcon,
   Title,
 } from "@mantine/core";
-import image from "../../assets/image.9a65bd94.svg";
+import image from "../../../public/assets/image.9a65bd94.svg";
 import classes from "../styles/HeroBullets.module.css";
 import useIsMobile from "../../designSystem/hooks/use-is-mobile";
 

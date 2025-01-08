@@ -10,9 +10,9 @@ import {
   Title,
 } from "@mantine/core";
 import { Carousel } from "@mantine/carousel";
-import img1 from "../../assets/dd.jpg";
-import img2 from "../../assets/gg.jpg";
-import img3 from "../../assets/images.jpg";
+import img1 from "../../../public/assets/dd.jpg";
+import img2 from "../../../public/assets/gg.jpg";
+import img3 from "../../../public/assets/images.jpg";
 import { usePrimaryColorHex } from "../../designSystem/hooks/use-primary-color";
 import useIsMobile from "../../designSystem/hooks/use-is-mobile";
 
@@ -140,7 +140,7 @@ export default function CourcesCarousel() {
         <Carousel
           draggable={false}
           slideSize={mobile ? "80%" : "40%"}
-          height={mobile ? 600 : 570}
+          height={mobile ? 650 : 570}
           align={mobile ? "start" : undefined}
           slideGap="md"
           withIndicators

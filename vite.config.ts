@@ -11,11 +11,11 @@ export default defineConfig({
       filename: "custom-sw.ts",
       strategies: "injectManifest",
       includeAssets: [
-        "./src/assets/dd.jpg",
-        "./src/assets/gg.jpg",
-        "./src/assets/image.9a65bd94.svg",
-        "./src/assets/image.b0c2306b.svg",
-        "./src/assets/images.jpg",
+        "/assets/dd.jpg",
+        "/assets/gg.jpg",
+        "/assets/image.9a65bd94.svg",
+        "/assets/image.b0c2306b.svg",
+        "/assets/images.jpg",
       ], // List other static assets here
 
       registerType: "autoUpdate", // Automatically updates the service worker

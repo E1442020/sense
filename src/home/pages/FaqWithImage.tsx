@@ -1,5 +1,5 @@
 import { Accordion, Container, Grid, Image, Title } from "@mantine/core";
-import image from "../../assets/image.b0c2306b.svg";
+import image from "../../../public/assets/image.b0c2306b.svg";
 import classes from "../styles/FaqWithImage.module.css";
 
 export function FaqWithImage() {
