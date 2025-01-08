@@ -1,12 +1,24 @@
 const CACHE_NAME = "my-cache-v1";
 const ASSETS_TO_CACHE = [
+  "/",
   "/index.html",
   "/assets/dd.jpg",
+  "/assets/dd-C5hmYWql.jpg",
   "/assets/gg.jpg",
+  "/assets/gg-BNwHf7uE.jpg",
   "/assets/image.9a65bd94.svg",
+  "/assets/image.9a65bd94-Cj-eOYyv.svg",
   "/assets/image.b0c2306b.svg",
+  "/assets/image.b0c2306b-iTqcCueo.svg",
   "/assets/images.jpg",
-  "/vite.svg", // Add additional static assets if needed
+  "/assets/images-zyqJ1PJB.jpg",
+  "/assets/index-BX3h7BfC.js",
+  "/assets/index-CHMDmIx_.css",
+  "/icons/icon-192x192.png",
+  "/manifest.webmanifest",
+  "/registerSW.js",
+  "/vite.svg",
+  // Add any other required assets here
 ];
 
 // Install event - Cache essential assets
