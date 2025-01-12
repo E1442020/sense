@@ -239,7 +239,7 @@ export default function CourseDetails() {
                 <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.js">
                   <div
                     style={{
-                      height: "100%",
+                      height: "500px",
                       width: "100%",
                       marginLeft: "auto",
                       marginRight: "auto",
