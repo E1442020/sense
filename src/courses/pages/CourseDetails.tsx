@@ -235,24 +235,22 @@ export default function CourseDetails() {
               </Flex>
             )}
             {lesson && lesson?.type == "pdf" && (
-              <Flex>
-                <Flex w="100%">
-                  <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.js">
-                    <div
-                      style={{
-                        height: "750px",
-                        maxWidth: "900px",
-                        marginLeft: "auto",
-                        marginRight: "auto",
-                      }}
-                    >
-                      <Viewer
-                        fileUrl="/sense.pdf"
-                        plugins={[defaultLayoutPluginInstance]}
-                      />
-                    </div>
-                  </Worker>
-                </Flex>
+              <Flex w="100%">
+                <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.js">
+                  <div
+                    style={{
+                      height: "100%",
+                      width: "100%",
+                      marginLeft: "auto",
+                      marginRight: "auto",
+                    }}
+                  >
+                    <Viewer
+                      fileUrl="/sense.pdf"
+                      plugins={[defaultLayoutPluginInstance]}
+                    />
+                  </div>
+                </Worker>
               </Flex>
             )}
           </Paper>
