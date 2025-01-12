@@ -4,6 +4,7 @@ import "@mantine/dates/styles.css";
 import "./i18n";
 import "./main.css";
 import "@mantine/carousel/styles.css";
+
 import { RouterProvider } from "react-router-dom";
 import { allRouters } from "./router.tsx";
 import {
@@ -59,18 +60,18 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   </>
 );
 
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker
-      .register("/custom-sw.js") // Ensure the path matches your deployment
-      .then((registration) => {
-        console.log(
-          "Service Worker registered with scope:",
-          registration.scope
-        );
-      })
-      .catch((error) => {
-        console.error("Service Worker registration failed:", error);
-      });
-  });
-}
+// if ("serviceWorker" in navigator) {
+//   window.addEventListener("load", () => {
+//     navigator.serviceWorker
+//       .register("/custom-sw.js") // Ensure the path matches your deployment
+//       .then((registration) => {
+//         console.log(
+//           "Service Worker registered with scope:",
+//           registration.scope
+//         );
+//       })
+//       .catch((error) => {
+//         console.error("Service Worker registration failed:", error);
+//       });
+//   });
+// }

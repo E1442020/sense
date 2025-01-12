@@ -1,43 +1,73 @@
 import { useState } from "react";
 import {
   Burger,
+  Button,
   Container,
   Drawer,
   Flex,
   Group,
-  Text,
   Title,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import classes from "./HeaderSimple.module.css";
 import { usePrimaryColorHex } from "../../hooks/use-primary-color";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 const links = [
   { link: "/", label: "home" },
   { link: "/about", label: "About" },
+  { link: "/courses", label: "Courses" },
+  { link: "/aiCoaching", label: " AI Coaching" },
 ];
 
 export function Header() {
   const [opened, { open, close }] = useDisclosure(false);
+  const navigate = useNavigate();
 
-  const [active, setActive] = useState(links[0].link);
+  const [active, setActive] = useState(() => {
+    // Retrieve active link from localStorage (if exists)
+    return localStorage.getItem("activeLink") || links[0].link;
+  });
+
   const color = usePrimaryColorHex();
   const { t } = useTranslation();
-  const items = links.map((link) => (
-    <Link
-      key={link.label}
-      to={link.link}
-      className={classes.link}
-      data-active={active === link.link || undefined}
-      onClick={() => {
-        setActive(link.link);
-      }}
-    >
-      {t(link.label)}
-    </Link>
-  ));
+
+  const handleClick = (link: any) => {
+    setActive(link);
+    // Store the active link in localStorage
+    localStorage.setItem("activeLink", link);
+  };
+
+  const items = links.map((link) => {
+    if (link.link == "/aiCoaching") {
+      return (
+        <Button
+          size="sm"
+          radius="xl"
+          variant={active === link.link ? undefined : "outline"}
+          onClick={() => {
+            handleClick(link.link);
+            navigate("/aiCoaching");
+          }}
+        >
+          AI Coaching
+        </Button>
+      );
+    } else {
+      return (
+        <Link
+          key={link.label}
+          to={link.link}
+          className={classes.link}
+          data-active={active === link.link || undefined}
+          onClick={() => handleClick(link.link)}
+        >
+          {t(link.label)}
+        </Link>
+      );
+    }
+  });
 
   return (
     <header className={classes.header}>
@@ -50,16 +80,20 @@ export function Header() {
         </Group>
         <Drawer size="40%" opened={opened} onClose={close}>
           <Flex direction="column" gap="sm">
-            <Link to="/">
-              <Text onClick={close} c="dark">
-                Home
-              </Text>
-            </Link>
-            <Link to="/about">
-              <Text onClick={close} c="dark">
-                About
-              </Text>
-            </Link>
+            {links.map((link) => (
+              <Link
+                onClick={() => {
+                  handleClick(link.link);
+                  close();
+                }}
+                key={link.label}
+                to={link.link}
+                className={classes.link}
+                data-active={active === link.link || undefined}
+              >
+                {t(link.label)}
+              </Link>
+            ))}
           </Flex>
         </Drawer>
 

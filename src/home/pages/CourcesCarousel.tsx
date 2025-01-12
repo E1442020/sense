@@ -15,6 +15,8 @@ import img2 from "../../../public/assets/gg.jpg";
 import img3 from "../../../public/assets/images.jpg";
 import { usePrimaryColorHex } from "../../designSystem/hooks/use-primary-color";
 import useIsMobile from "../../designSystem/hooks/use-is-mobile";
+import { useCallback, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function CourcesCarousel() {
   const carouselData = [
@@ -119,8 +121,33 @@ export default function CourcesCarousel() {
       callToAction: "Sign Up To Practice Live",
     },
   ];
+  const navigate = useNavigate();
+
   const color = usePrimaryColorHex();
   const mobile = useIsMobile();
+  const [isInnerCarouselActive, setInnerCarouselActive] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const innerCarouselRef = useRef(null); // Ref for inner carousel
+  const parentCarouselRef = useRef(null); // Ref for parent carousel
+
+  // Debounced event handlers
+  const handleMouseDown = useCallback((e: any) => {
+    e.stopPropagation();
+    setInnerCarouselActive(true); // Deactivate parent carousel dragging
+  }, []);
+
+  const handleTouchStart = useCallback((e: any) => {
+    e.stopPropagation();
+    setInnerCarouselActive(true); // Deactivate parent carousel dragging
+  }, []);
+
+  const handleMouseUp = useCallback(() => setInnerCarouselActive(false), []);
+  const handleTouchEnd = useCallback(() => setInnerCarouselActive(false), []);
+
+  const handleIndexChange = useCallback((index: any) => {
+    setCurrentIndex(index); // Update the current index on outer carousel
+  }, []);
+
   return (
     <>
       <Container size="lg" mb="md">
@@ -137,8 +164,11 @@ export default function CourcesCarousel() {
           We offer a wide range of courses across different disciplines. Start
           your learning journey today and gain valuable skills at your own pace.
         </Text>
+
+        {/* Parent carousel */}
         <Carousel
-          draggable={false}
+          ref={parentCarouselRef}
+          draggable={!isInnerCarouselActive} // Only enable dragging on outer carousel if the inner carousel is inactive
           slideSize={mobile ? "80%" : "40%"}
           height={mobile ? 650 : 570}
           align={mobile ? "start" : undefined}
@@ -149,7 +179,13 @@ export default function CourcesCarousel() {
             indicator: {
               backgroundColor: color,
             },
+            container: {
+              transition: "all 0.3s ease-out",
+            },
+            // Add smooth transition styles here
           }}
+          onSlideChange={handleIndexChange} // Handle index change of outer carousel
+          initialSlide={currentIndex} // Make sure to restore the index after touch
         >
           {carouselData.map((item, index) => (
             <Carousel.Slide key={index}>
@@ -167,6 +203,11 @@ export default function CourcesCarousel() {
                   </Text>
                   <Box>
                     <Carousel
+                      ref={innerCarouselRef} // Ref for nested carousel
+                      onMouseDown={handleMouseDown} // Use memoized event handlers
+                      onTouchStart={handleTouchStart} // Use memoized event handlers
+                      onMouseUp={handleMouseUp} // Use memoized event handlers
+                      onTouchEnd={handleTouchEnd} // Use memoized event handlers
                       height={160}
                       align="start"
                       slideSize={mobile ? "80%" : "60%"}
@@ -218,6 +259,7 @@ export default function CourcesCarousel() {
                       ))}
                     </Carousel>
                   </Box>
+
                   <Text c={color} tt={"uppercase"}>
                     Watch Professionals like you
                   </Text>
@@ -245,12 +287,14 @@ export default function CourcesCarousel() {
                       </Flex>
                     ))}
                   </Flex>
+
                   {/* Call-to-Action Button */}
                   <Button
                     variant="gradient"
                     gradient={{ from: "violet", to: "blue" }}
                     size="md"
                     mt="md"
+                    onClick={() => navigate("/courseDetails")}
                   >
                     {item.callToAction}
                   </Button>

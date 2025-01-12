@@ -94,7 +94,7 @@ export function FooterLinks() {
       </Container>
       <Container size="lg" className={classes.afterFooter}>
         <Text c="dimmed" size="sm">
-          © 2020 mantine.dev. All rights reserved.
+          © 2025 SENSE. All rights reserved.
         </Text>
 
         <Group
