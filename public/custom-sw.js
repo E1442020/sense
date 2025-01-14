@@ -36,18 +36,15 @@ self.addEventListener("install", (event) => {
 self.addEventListener("fetch", (event) => {
   event.respondWith(
     caches.match(event.request).then((response) => {
-      // Return cached response if found
-      if (response) {
-        return response;
-      }
-
-      return fetch(event.request).catch(() => {
-        // If the request is a navigation request (like /about, /dashboard),
-        // fallback to the cached index.html
-        if (event.request.mode === "navigate") {
-          return caches.match("/");
-        }
-      });
+      return (
+        response ||
+        fetch(event.request).then((networkResponse) => {
+          return caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, networkResponse.clone());
+            return networkResponse;
+          });
+        })
+      );
     })
   );
 });
