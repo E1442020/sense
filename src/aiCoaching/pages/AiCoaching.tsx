@@ -87,11 +87,12 @@ export default function AiCoaching() {
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" }); // Smooth scrolling to the top
-
+    setTimeout(() => {
+      if (scrollRef.current) {
+        scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+      }
+    }, 100);
     // Scroll to the bottom of the chat container whenever a new message is added
-    if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-    }
   }, [messages]);
 
   useEffect(() => {
@@ -264,9 +265,9 @@ export default function AiCoaching() {
             <Button
               onClick={() => {
                 window.scrollTo({ top: 0, behavior: "smooth" }); // Smooth scrolling to the top
-                setTimeout(() => {
-                  handleSend(); // Trigger send logic with a delay to allow scroll to complete
-                }, 0); // Execute handleSend immediately after scroll
+
+                handleSend(); // Trigger send logic with a delay to allow scroll to complete
+                // Execute handleSend immediately after scroll
               }}
               disabled={isTyping} // Disable button while typing is in progress
             >

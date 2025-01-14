@@ -17,6 +17,7 @@ import {
   Text,
   Title,
 } from "@mantine/core";
+import img2 from "../../../public/assets/gg.jpg";
 
 import { Viewer, Worker } from "@react-pdf-viewer/core";
 import { defaultLayoutPlugin } from "@react-pdf-viewer/default-layout";
@@ -201,7 +202,7 @@ export default function CourseDetails() {
                   fluid={false} // Disable fluid to control dimensions manually
                   height={mobile ? 400 : 530} // Explicitly set height
                   playsInline
-                  poster="/public/assets/gg.jpg"
+                  poster={img2}
                   src={lesson.content}
                 />
               </Flex>
