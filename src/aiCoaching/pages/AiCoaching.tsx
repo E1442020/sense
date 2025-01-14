@@ -86,6 +86,8 @@ export default function AiCoaching() {
   };
 
   useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" }); // Smooth scrolling to the top
+
     // Scroll to the bottom of the chat container whenever a new message is added
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
@@ -120,7 +122,7 @@ export default function AiCoaching() {
         </Flex>
 
         <Flex
-          h={`calc(100vh - ${130}px)`}
+          h={mobile ? `calc(100vh - ${130}px)` : undefined}
           direction="column"
           gap="md"
           style={{
@@ -251,6 +253,7 @@ export default function AiCoaching() {
               onChange={(e) => setUserInput(e.target.value)}
               onKeyDown={(e) => {
                 if (e.key === "Enter" && !e.shiftKey) {
+                  window.scrollTo({ top: 0, behavior: "smooth" }); // Smooth scrolling to the top
                   e.preventDefault();
                   handleSend();
                 }
@@ -259,7 +262,12 @@ export default function AiCoaching() {
               disabled={isTyping} // Disable input while typing is in progress
             />
             <Button
-              onClick={handleSend}
+              onClick={() => {
+                window.scrollTo({ top: 0, behavior: "smooth" }); // Smooth scrolling to the top
+                setTimeout(() => {
+                  handleSend(); // Trigger send logic with a delay to allow scroll to complete
+                }, 0); // Execute handleSend immediately after scroll
+              }}
               disabled={isTyping} // Disable button while typing is in progress
             >
               Send

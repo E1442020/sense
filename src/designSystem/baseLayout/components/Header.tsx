@@ -72,7 +72,16 @@ export function Header() {
   return (
     <header className={classes.header}>
       <Container size="lg" className={classes.inner}>
-        <Title c={color} order={3}>
+        <Title
+          c={color}
+          order={3}
+          style={{
+            cursor: "pointer",
+          }}
+          onClick={() => {
+            navigate("/");
+          }}
+        >
           SENSE
         </Title>
         <Group gap={5} visibleFrom="xs">

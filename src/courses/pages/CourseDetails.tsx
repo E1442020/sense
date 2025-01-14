@@ -201,7 +201,7 @@ export default function CourseDetails() {
                   fluid={false} // Disable fluid to control dimensions manually
                   height={mobile ? 400 : 530} // Explicitly set height
                   playsInline
-                  poster="/assets/poster.png"
+                  poster="/public/assets/gg.jpg"
                   src={lesson.content}
                 />
               </Flex>
