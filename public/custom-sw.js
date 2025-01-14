@@ -2,6 +2,9 @@ const CACHE_NAME = "my-cache-v1";
 const ASSETS_TO_CACHE = [
   "/",
   "/index.html",
+  "/src/main.tsx",
+  "/courses",
+
   "/assets/dd.jpg",
   "/assets/dd-C5hmYWql.jpg",
   "/assets/gg.jpg",
@@ -22,34 +25,54 @@ const ASSETS_TO_CACHE = [
 ];
 
 // Install event - Cache essential assets
+// Install event - Cache essential assets
 self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      console.log("Caching assets...");
+      console.log("Caching essential assets...");
       return cache.addAll(ASSETS_TO_CACHE);
     })
   );
   self.skipWaiting();
 });
 
-// Fetch event - Serve cached resources and provide fallbacks
+// Fetch event - Handle SPA routing and asset caching
 self.addEventListener("fetch", (event) => {
-  event.respondWith(
-    caches.match(event.request).then((response) => {
-      return (
-        response ||
-        fetch(event.request).then((networkResponse) => {
-          return caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, networkResponse.clone());
-            return networkResponse;
-          });
-        })
-      );
-    })
-  );
+  if (event.request.mode === "navigate") {
+    // For SPA routes, serve index.html
+    event.respondWith(
+      caches.match("/index.html").then((response) => {
+        return (
+          response ||
+          fetch(event.request).catch(
+            () => caches.match("/index.html") // Fallback to index.html if offline
+          )
+        );
+      })
+    );
+  } else {
+    // Handle static assets
+    event.respondWith(
+      caches.match(event.request).then((response) => {
+        return (
+          response ||
+          fetch(event.request)
+            .then((networkResponse) => {
+              return caches.open(CACHE_NAME).then((cache) => {
+                cache.put(event.request, networkResponse.clone());
+                return networkResponse;
+              });
+            })
+            .catch(() => {
+              console.error("Resource not available:", event.request.url);
+            })
+        );
+      })
+    );
+  }
 });
 
-// Activate event - Clean up old caches
+// Activate event - Cleanup old caches
 self.addEventListener("activate", (event) => {
   const cacheWhitelist = [CACHE_NAME];
   event.waitUntil(
@@ -57,11 +80,12 @@ self.addEventListener("activate", (event) => {
       Promise.all(
         cacheNames.map((cacheName) => {
           if (!cacheWhitelist.includes(cacheName)) {
-            return caches.delete(cacheName); // Remove old caches only.
+            console.log("Deleting old cache:", cacheName);
+            return caches.delete(cacheName);
           }
         })
       )
     )
   );
-  self.clients.claim(); // Ensure the service worker takes control immediately.
+  self.clients.claim();
 });
