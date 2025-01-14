@@ -91,8 +91,9 @@ export default function CourseDetails() {
           },
           {
             title: "Creating an Effective Team Culture",
-            type: "pdf",
-            content: "/ss.pdf", // Example PDF URL
+            type: "text",
+            content:
+              "This lesson covers the fundamentals of team building, including the importance of collaboration and trust.", // Example PDF URL
           },
         ],
       },
@@ -268,49 +269,47 @@ export default function CourseDetails() {
             </Button>
           </Affix>
           <Drawer size="70%" opened={opened} onClose={close}>
-            <Flex>
-              <Paper w="100%" shadow="md" p="md">
-                <ScrollArea.Autosize mah={800}>
-                  <Flex direction="column" gap="md">
-                    <Title order={4}>Course Sections</Title>
-                    <Accordion
-                      radius="xl"
-                      variant="separated"
-                      defaultValue="Apples"
-                    >
-                      {course.sections.map((item, index) => (
-                        <Accordion.Item key={index} value={item.title}>
-                          <Accordion.Control bg={color} c="white">
-                            <Title order={6}>{item.title}</Title>
-                          </Accordion.Control>
-                          <Accordion.Panel>
-                            <Flex direction="column" gap="md">
-                              {item.lessons.map((lesson, index) => (
-                                <Paper
-                                  style={{
-                                    cursor: "pointer",
-                                  }}
-                                  radius="md"
-                                  bg="gray.2"
-                                  p="xs"
-                                  key={index}
-                                  onClick={() => {
-                                    setLesson(lesson);
-                                    close();
-                                  }}
-                                >
-                                  {index + 1}- {lesson.title}
-                                </Paper>
-                              ))}
-                            </Flex>
-                          </Accordion.Panel>
-                        </Accordion.Item>
-                      ))}
-                    </Accordion>
-                  </Flex>
-                </ScrollArea.Autosize>
-              </Paper>
-            </Flex>
+            <Paper w="100%" shadow="md" p="md">
+              <ScrollArea.Autosize mah={800}>
+                <Flex direction="column" gap="md">
+                  <Title order={4}>Course Sections</Title>
+                  <Accordion
+                    radius="xl"
+                    variant="separated"
+                    defaultValue="Apples"
+                  >
+                    {course.sections.map((item, index) => (
+                      <Accordion.Item key={index} value={item.title}>
+                        <Accordion.Control bg={color} c="white">
+                          <Title order={6}>{item.title}</Title>
+                        </Accordion.Control>
+                        <Accordion.Panel>
+                          <Flex direction="column" gap="md">
+                            {item.lessons.map((lesson, index) => (
+                              <Paper
+                                style={{
+                                  cursor: "pointer",
+                                }}
+                                radius="md"
+                                bg="gray.2"
+                                p="xs"
+                                key={index}
+                                onClick={() => {
+                                  setLesson(lesson);
+                                  close();
+                                }}
+                              >
+                                {index + 1}- {lesson.title}
+                              </Paper>
+                            ))}
+                          </Flex>
+                        </Accordion.Panel>
+                      </Accordion.Item>
+                    ))}
+                  </Accordion>
+                </Flex>
+              </ScrollArea.Autosize>
+            </Paper>
           </Drawer>
         </>
       )}

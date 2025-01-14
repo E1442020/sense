@@ -14,9 +14,12 @@ import {
 import image from "../../../public/assets/image.9a65bd94.svg";
 import classes from "../styles/HeroBullets.module.css";
 import useIsMobile from "../../designSystem/hooks/use-is-mobile";
+import { useNavigate } from "react-router-dom";
 
 export function HeroBullets() {
   const mobile = useIsMobile();
+  const navigate = useNavigate();
+
   return (
     <Container size="lg">
       <div className={classes.inner}>
@@ -57,7 +60,15 @@ export function HeroBullets() {
             </List>
 
             <Group mt={30}>
-              <Button radius="xl" size="md" className={classes.control}>
+              <Button
+                radius="xl"
+                size="md"
+                className={classes.control}
+                onClick={() => {
+                  navigate("/courses");
+                  localStorage.setItem("activeLink", "/courses");
+                }}
+              >
                 Start Learning
               </Button>
               <Button
@@ -65,6 +76,10 @@ export function HeroBullets() {
                 radius="xl"
                 size="md"
                 className={classes.control}
+                onClick={() => {
+                  navigate("/courses");
+                  localStorage.setItem("activeLink", "/courses");
+                }}
               >
                 Explore Courses
               </Button>

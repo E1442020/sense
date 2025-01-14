@@ -1313,7 +1313,10 @@ export default function Courses() {
         <Pagination
           radius="xl"
           value={activePage}
-          onChange={setActivePage}
+          onChange={(page) => {
+            setActivePage(page);
+            window.scrollTo({ top: 0, behavior: "smooth" }); // Smooth scrolling to the top
+          }}
           total={totalPages}
           siblings={1} // Adjust the number of sibling pages to show
           style={{ marginTop: "20px", textAlign: "center" }}

@@ -35,8 +35,8 @@ export default function AiCoaching() {
   const [isTypingCompleted, setIsTypingCompleted] = useState<boolean>(false); // Track typing completion state
   const [isTyping, setIsIsTyping] = useState<boolean>(false); // Track typing completion state
   const scrollRef = useRef<HTMLDivElement>(null); // Scroll reference to auto-scroll chat
-  const headerHeight = 60;
   const mobile = useIsMobile();
+  const headerHeight = mobile ? 130 : 60;
 
   const handleSend = () => {
     if (!userInput.trim()) return;
@@ -120,6 +120,7 @@ export default function AiCoaching() {
         </Flex>
 
         <Flex
+          h={`calc(100vh - ${130}px)`}
           direction="column"
           gap="md"
           style={{
@@ -144,7 +145,14 @@ export default function AiCoaching() {
           >
             {firstMsg && (
               <Flex h="100%" justify="center" align="center">
-                <Title h="100%" ta={"center"} order={4} my="xl">
+                <Title
+                  h="100%"
+                  ta={"center"}
+                  order={4}
+                  my="xl"
+                  mt="3rem"
+                  c="dark.6"
+                >
                   Start Chatting With Your AI Coaching...
                 </Title>
               </Flex>
