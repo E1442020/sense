@@ -4,7 +4,7 @@ import Home from "./home/pages/Home";
 import About from "./home/pages/About";
 import Courses from "./courses/pages/Courses";
 import CourseDetails from "./courses/pages/CourseDetails";
-import Ai from "./aiCoaching/pages/ai";
+import Ai from "./aiCoaching/pages/Ai";
 
 export const allRouters = createBrowserRouter([
   {
