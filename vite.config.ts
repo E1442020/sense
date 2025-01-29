@@ -47,5 +47,12 @@ export default defineConfig({
     fs: {
       allow: ["."],
     },
+    proxy: {
+      "/api": {
+        target: "http://localhost:3000", // Your backend server
+        changeOrigin: true, // Ensures host headers match the backend
+        rewrite: (path) => path.replace(/^\/api/, ""), // Rewrite the path if necessary
+      },
+    },
   },
 });

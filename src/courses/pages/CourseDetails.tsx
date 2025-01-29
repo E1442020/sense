@@ -17,7 +17,6 @@ import {
   Text,
   Title,
 } from "@mantine/core";
-import img2 from "../../../public/assets/gg.jpg";
 
 import { Viewer, Worker } from "@react-pdf-viewer/core";
 import { defaultLayoutPlugin } from "@react-pdf-viewer/default-layout";
@@ -33,99 +32,113 @@ import { IconBook, IconInfoCircle } from "@tabler/icons-react";
 import { useDisclosure } from "@mantine/hooks";
 import "video-react/dist/video-react.css"; // Correct import path
 import { Player } from "video-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ReactAudioPlayer from "react-audio-player";
+import { useParams } from "react-router-dom";
+import { GetService } from "../../services/requests-service";
+import ApiRoutes from "../../services/api-routes";
 
 export default function CourseDetails() {
   const color = usePrimaryColorHex(4);
   const defaultLayoutPluginInstance = defaultLayoutPlugin();
 
-  const course = {
-    title: "Celebrate Team Achievements",
-    duration: "19 min",
-    category: "Emotional Intelligence",
-    // professionals: [
-    //   {
-    //     name: "Howard Schultz",
-    //     role: "Former Starbucks CEO",
-    //     image: img1,
-    //     shortRole: "Starbucks CEO",
-    //   },
-    //   {
-    //     name: "Elaine Welteroth",
-    //     role: "Multimedia Icon",
-    //     image: img2,
-    //     shortRole: "Product Manager",
-    //   },
-    // ],
-    callToAction: "Sign Up To Practice Live",
-    sections: [
-      {
-        title: "Introduction to Team Building",
-        lessons: [
-          {
-            title: "What is Team Building?",
-            type: "text",
-            content:
-              "This lesson covers the fundamentals of team building, including the importance of collaboration and trust.",
-          },
-          {
-            title: "Understanding Emotional Intelligence",
-            type: "video",
-            content: "https://media.w3.org/2010/05/sintel/trailer_hd.mp4", // Example video URL
-          },
-          {
-            title: "Team Dynamics",
-            type: "audio",
-            content:
-              "https://codeskulptor-demos.commondatastorage.googleapis.com/pang/paza-moduless.mp3", // Example audio URL
-          },
-        ],
-      },
-      {
-        title: "Advanced Team Strategies",
-        lessons: [
-          {
-            title: "Conflict Resolution in Teams",
-            type: "video",
-            content: "https://media.w3.org/2010/05/sintel/trailer_hd.mp4", // Example video URL
-          },
-          {
-            title: "Creating an Effective Team Culture",
-            type: "text",
-            content:
-              "This lesson covers the fundamentals of team building, including the importance of collaboration and trust.", // Example PDF URL
-          },
-        ],
-      },
-      {
-        title: "Introduction to Team ",
-        lessons: [
-          {
-            title: "What is Team Building?",
-            type: "text",
-            content:
-              "This lesson covers the fundamentals of team building, including the importance of collaboration and trust.",
-          },
-          {
-            title: "Understanding Emotional Intelligence",
-            type: "video",
-            content: "https://media.w3.org/2010/05/sintel/trailer_hd.mp4", // Example video URL
-          },
-          {
-            title: "Team Dynamics",
-            type: "audio",
-            content:
-              "https://codeskulptor-demos.commondatastorage.googleapis.com/pang/paza-moduless.mp3", // Example audio URL
-          },
-        ],
-      },
-    ],
-  };
+  // const course = {
+  //   title: "Celebrate Team Achievements",
+  //   duration: "19 min",
+  //   category: "Emotional Intelligence",
+  //   // professionals: [
+  //   //   {
+  //   //     name: "Howard Schultz",
+  //   //     role: "Former Starbucks CEO",
+  //   //     image: img1,
+  //   //     shortRole: "Starbucks CEO",
+  //   //   },
+  //   //   {
+  //   //     name: "Elaine Welteroth",
+  //   //     role: "Multimedia Icon",
+  //   //     image: img2,
+  //   //     shortRole: "Product Manager",
+  //   //   },
+  //   // ],
+  //   callToAction: "Sign Up To Practice Live",
+  //   sections: [
+  //     {
+  //       title: "Introduction to Team Building",
+  //       lessons: [
+  //         {
+  //           title: "What is Team Building?",
+  //           type: "text",
+  //           content:
+  //             "This lesson covers the fundamentals of team building, including the importance of collaboration and trust.",
+  //         },
+  //         {
+  //           title: "Understanding Emotional Intelligence",
+  //           type: "video",
+  //           content: "https://media.w3.org/2010/05/sintel/trailer_hd.mp4", // Example video URL
+  //         },
+  //         {
+  //           title: "Team Dynamics",
+  //           type: "audio",
+  //           content:
+  //             "https://codeskulptor-demos.commondatastorage.googleapis.com/pang/paza-moduless.mp3", // Example audio URL
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       title: "Advanced Team Strategies",
+  //       lessons: [
+  //         {
+  //           title: "Conflict Resolution in Teams",
+  //           type: "video",
+  //           content: "https://media.w3.org/2010/05/sintel/trailer_hd.mp4", // Example video URL
+  //         },
+  //         {
+  //           title: "Creating an Effective Team Culture",
+  //           type: "text",
+  //           content:
+  //             "This lesson covers the fundamentals of team building, including the importance of collaboration and trust.", // Example PDF URL
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       title: "Introduction to Team ",
+  //       lessons: [
+  //         {
+  //           title: "What is Team Building?",
+  //           type: "text",
+  //           content:
+  //             "This lesson covers the fundamentals of team building, including the importance of collaboration and trust.",
+  //         },
+  //         {
+  //           title: "Understanding Emotional Intelligence",
+  //           type: "video",
+  //           content: "https://media.w3.org/2010/05/sintel/trailer_hd.mp4", // Example video URL
+  //         },
+  //         {
+  //           title: "Team Dynamics",
+  //           type: "audio",
+  //           content:
+  //             "https://codeskulptor-demos.commondatastorage.googleapis.com/pang/paza-moduless.mp3", // Example audio URL
+  //         },
+  //       ],
+  //     },
+  //   ],
+  // };
+  const { id } = useParams();
+  const [course, setCourse] = useState<any>(null);
+
   const headerHeight = 55;
   const mobile = useIsMobile();
   const [lesson, setLesson] = useState<any>(null);
   const [opened, { open, close }] = useDisclosure(false);
+
+  useEffect(() => {
+    GetService({
+      route: ApiRoutes.courses + `/${id}`,
+    }).then((res: any) => {
+      setCourse(res.data);
+    });
+  }, [id]);
 
   return (
     <>
@@ -141,37 +154,53 @@ export default function CourseDetails() {
                 <Title order={4} c="white">
                   Course Sections
                 </Title>
-                <Accordion
-                  radius="xl"
-                  variant="separated"
-                  defaultValue="Apples"
-                >
-                  {course.sections.map((item, index) => (
-                    <Accordion.Item key={index} value={item.title}>
-                      <Accordion.Control c="dark">
-                        <Title order={6}>{item.title}</Title>
-                      </Accordion.Control>
-                      <Accordion.Panel>
-                        <Flex direction="column" gap="md">
-                          {item.lessons.map((lesson, index) => (
-                            <Paper
-                              style={{
-                                cursor: "pointer",
-                              }}
-                              radius="md"
-                              p="xs"
-                              bg="gray.2"
-                              key={index}
-                              onClick={() => setLesson(lesson)}
-                            >
-                              {index + 1}- {lesson.title}
-                            </Paper>
-                          ))}
-                        </Flex>
-                      </Accordion.Panel>
-                    </Accordion.Item>
-                  ))}
-                </Accordion>
+                {course?.sections?.length > 0 ? (
+                  <Accordion
+                    radius="xl"
+                    variant="separated"
+                    defaultValue="Apples"
+                  >
+                    {course?.sections?.map((item: any, index: any) => (
+                      <Accordion.Item key={index} value={item.title}>
+                        <Accordion.Control c="dark">
+                          <Title order={6}>{item.title}</Title>
+                        </Accordion.Control>
+                        {item?.lessons?.length > 0 ? (
+                          <Flex direction="column">
+                            {item?.lessons.map((lesson: any, index: any) => (
+                              <Accordion.Panel>
+                                <Paper
+                                  style={{
+                                    cursor: "pointer",
+                                  }}
+                                  radius="md"
+                                  p="xs"
+                                  bg="gray.2"
+                                  key={index}
+                                  onClick={() => setLesson(lesson)}
+                                >
+                                  {index + 1}- {lesson.title}
+                                </Paper>
+                              </Accordion.Panel>
+                            ))}
+                          </Flex>
+                        ) : (
+                          <Accordion.Panel>
+                            <Text c={color}>
+                              No lessons found in this section.
+                            </Text>
+                          </Accordion.Panel>
+                        )}
+                      </Accordion.Item>
+                    ))}
+                  </Accordion>
+                ) : (
+                  <Flex justify="center" mt="12rem">
+                    <Title c="white" order={5}>
+                      No sections found now.
+                    </Title>
+                  </Flex>
+                )}
               </Flex>
             </ScrollArea.Autosize>
           </Paper>
@@ -179,13 +208,18 @@ export default function CourseDetails() {
 
         <Flex w={mobile ? "100%" : "78%"}>
           <Paper p="md" w="100%" shadow="md" h="100%">
-            <Text c="dimmed" size="xs">
-              {course.category} • {course.duration}
-            </Text>
-            <Title order={3}>{course.title}</Title>
+            {/* <Text c="dimmed" size="xs">
+              {course?.category} • {course?.duration}
+            </Text> */}
+            <Title order={3}>{course?.title}</Title>
             {lesson && (
               <Text fw="bolder" c={color}>
                 Lesson: {lesson.title}
+              </Text>
+            )}
+            {lesson && (lesson.type === "video" || lesson.type === "audio") && (
+              <Text fw="bolder" c={color}>
+                Duration: {lesson.duration}
               </Text>
             )}
 
@@ -202,7 +236,7 @@ export default function CourseDetails() {
                   fluid={false} // Disable fluid to control dimensions manually
                   height={mobile ? 400 : 530} // Explicitly set height
                   playsInline
-                  poster={img2}
+                  // poster={img2}
                   src={lesson.content}
                 />
               </Flex>
@@ -274,40 +308,59 @@ export default function CourseDetails() {
               <ScrollArea.Autosize mah={800}>
                 <Flex direction="column" gap="md">
                   <Title order={4}>Course Sections</Title>
-                  <Accordion
-                    radius="xl"
-                    variant="separated"
-                    defaultValue="Apples"
-                  >
-                    {course.sections.map((item, index) => (
-                      <Accordion.Item key={index} value={item.title}>
-                        <Accordion.Control bg={color} c="white">
-                          <Title order={6}>{item.title}</Title>
-                        </Accordion.Control>
-                        <Accordion.Panel>
-                          <Flex direction="column" gap="md">
-                            {item.lessons.map((lesson, index) => (
-                              <Paper
-                                style={{
-                                  cursor: "pointer",
-                                }}
-                                radius="md"
-                                bg="gray.2"
-                                p="xs"
-                                key={index}
-                                onClick={() => {
-                                  setLesson(lesson);
-                                  close();
-                                }}
-                              >
-                                {index + 1}- {lesson.title}
-                              </Paper>
-                            ))}
-                          </Flex>
-                        </Accordion.Panel>
-                      </Accordion.Item>
-                    ))}
-                  </Accordion>
+                  {course?.sections?.length > 0 ? (
+                    <Accordion
+                      radius="xl"
+                      variant="separated"
+                      defaultValue="Apples"
+                    >
+                      {course?.sections?.map((item: any, index: any) => (
+                        <Accordion.Item key={index} value={item.title}>
+                          <Accordion.Control bg={color} c="white">
+                            <Title order={6}>{item.title}</Title>
+                          </Accordion.Control>
+
+                          {item?.lessons?.length > 0 ? (
+                            <Accordion.Panel>
+                              <Flex direction="column" gap="md">
+                                {item?.lessons.map(
+                                  (lesson: any, index: any) => (
+                                    <Paper
+                                      style={{
+                                        cursor: "pointer",
+                                      }}
+                                      radius="md"
+                                      bg="gray.2"
+                                      p="xs"
+                                      key={index}
+                                      onClick={() => {
+                                        setLesson(lesson);
+                                        close();
+                                      }}
+                                    >
+                                      {index + 1}- {lesson.title}
+                                    </Paper>
+                                  )
+                                )}
+                              </Flex>
+                            </Accordion.Panel>
+                          ) : (
+                            <Accordion.Panel>
+                              <Text c={color}>
+                                No lessons found in this section.
+                              </Text>
+                            </Accordion.Panel>
+                          )}
+                        </Accordion.Item>
+                      ))}
+                    </Accordion>
+                  ) : (
+                    <Flex justify="center" mt="12rem">
+                      <Title c={color} order={5}>
+                        No sections found now.
+                      </Title>
+                    </Flex>
+                  )}
                 </Flex>
               </ScrollArea.Autosize>
             </Paper>

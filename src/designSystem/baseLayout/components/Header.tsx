@@ -16,7 +16,7 @@ import { useTranslation } from "react-i18next";
 
 const links = [
   { link: "/", label: "home" },
-  { link: "/about", label: "About" },
+  // { link: "/about", label: "About" },
   { link: "/courses", label: "Courses" },
   { link: "/aiCoaching", label: " AI Coaching" },
 ];

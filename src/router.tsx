@@ -2,9 +2,9 @@ import { createBrowserRouter } from "react-router-dom";
 import BaseLayout from "./designSystem/baseLayout/components/BaseLayout";
 import Home from "./home/pages/Home";
 import About from "./home/pages/About";
-import AiCoaching from "./aiCoaching/pages/AiCoaching";
 import Courses from "./courses/pages/Courses";
 import CourseDetails from "./courses/pages/CourseDetails";
+import Ai from "./aiCoaching/pages/ai";
 
 export const allRouters = createBrowserRouter([
   {
@@ -22,14 +22,14 @@ export const allRouters = createBrowserRouter([
       },
       {
         path: "/aiCoaching",
-        element: <AiCoaching />,
+        element: <Ai />,
       },
       {
         path: "/courses",
         element: <Courses />,
       },
       {
-        path: "/courseDetails",
+        path: "/courseDetails/:id",
         element: <CourseDetails />,
       },
     ],

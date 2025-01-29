@@ -3,1196 +3,1212 @@ import {
   Button,
   Container,
   Flex,
-  Pagination,
   Paper,
   Stack,
   Text,
   Title,
 } from "@mantine/core";
-import img1 from "../../../public/assets/dd.jpg";
-import img2 from "../../../public/assets/gg.jpg";
-import img3 from "../../../public/assets/images.jpg";
-import { useState } from "react";
+
+import { useEffect, useState } from "react";
 import { Carousel } from "@mantine/carousel";
 import { usePrimaryColorHex } from "../../designSystem/hooks/use-primary-color";
 import useIsMobile from "../../designSystem/hooks/use-is-mobile";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import PaginationList from "../../designSystem/baseLayout/components/Pagination";
+import { GetService } from "../../services/requests-service";
+import ApiRoutes from "../../services/api-routes";
 
 export default function Courses() {
-  const carouselData = [
-    {
-      title: "Celebrate Team Achievements",
-      duration: "19 min",
-      category: "Emotional Intelligence",
-      professionals: [
-        {
-          name: "Howard Schultz",
-          role: "Former Starbucks CEO",
-          image: img1,
-          shortRole: "Starbucks CEO",
-        },
-        {
-          name: "Elaine Welteroth",
-          role: "Multimedia Icon",
-          image: img2,
-          shortRole: "Product Manager",
-        },
-      ],
-      callToAction: "Sign Up To Practice Live",
-      sections: [
-        {
-          title: "Introduction to Team Building",
-          lessons: [
-            {
-              title: "What is Team Building?",
-              type: "text",
-              content:
-                "This lesson covers the fundamentals of team building, including the importance of collaboration and trust.",
-            },
-            {
-              title: "Understanding Emotional Intelligence",
-              type: "video",
-              content: "https://www.example.com/video1.mp4", // Example video URL
-            },
-            {
-              title: "Team Dynamics",
-              type: "audio",
-              content: "https://www.example.com/audio1.mp3", // Example audio URL
-            },
-          ],
-        },
-        {
-          title: "Advanced Team Strategies",
-          lessons: [
-            {
-              title: "Conflict Resolution in Teams",
-              type: "video",
-              content: "https://www.example.com/video2.mp4", // Example video URL
-            },
-            {
-              title: "Creating an Effective Team Culture",
-              type: "pdf",
-              content: "https://www.example.com/reading1.pdf", // Example PDF URL
-            },
-          ],
-        },
-      ],
-    },
-    {
-      title: "Facilitate Successful Meetings",
-      duration: "22 min",
-      category: "Leadership Skills",
-      professionals: [
-        {
-          name: "Melody Hobson",
-          role: "President of Ariel Investments",
-          image: img3,
-          shortRole: "Product Manager",
-        },
-        {
-          name: "James Clear",
-          role: "Author of Atomic Habits",
-          image: img1,
-          shortRole: "Starbucks CEO",
-        },
-      ],
-      callToAction: "Sign Up To Practice Live",
-      sections: [
-        {
-          title: "Planning and Structuring Meetings",
-          lessons: [
-            {
-              title: "The Art of Meeting Planning",
-              type: "text",
-              content:
-                "This lesson covers the key components of effective meeting planning, from setting agendas to identifying objectives.",
-            },
-            {
-              title: "Setting Clear Objectives",
-              type: "video",
-              content: "https://www.example.com/video3.mp4", // Example video URL
-            },
-          ],
-        },
-        {
-          title: "Facilitating Effective Discussions",
-          lessons: [
-            {
-              title: "Managing Group Dynamics",
-              type: "audio",
-              content: "https://www.example.com/audio2.mp3", // Example audio URL
-            },
-            {
-              title: "Dealing with Conflict in Meetings",
-              type: "pdf",
-              content: "https://www.example.com/reading2.pdf", // Example PDF URL
-            },
-          ],
-        },
-      ],
-    },
-    {
-      title: "Master Conflict Resolution",
-      duration: "18 min",
-      category: "Workplace Strategies",
-      professionals: [
-        {
-          name: "Susan Cain",
-          role: "Author of Quiet",
-          image: img1,
-          shortRole: "Starbucks CEO",
-        },
-        {
-          name: "Adam Grant",
-          role: "Organizational Psychologist",
-          image: img2,
-          shortRole: "Product Manager",
-        },
-      ],
-      callToAction: "Sign Up To Practice Live",
-      sections: [
-        {
-          title: "Understanding Conflict",
-          lessons: [
-            {
-              title: "Types of Conflict in the Workplace",
-              type: "text",
-              content:
-                "This lesson introduces the different types of conflict that can arise in a workplace setting.",
-            },
-            {
-              title: "Emotional Intelligence in Conflict Resolution",
-              type: "video",
-              content: "https://www.example.com/video4.mp4", // Example video URL
-            },
-          ],
-        },
-        {
-          title: "Advanced Conflict Resolution Skills",
-          lessons: [
-            {
-              title: "Effective Communication Techniques",
-              type: "audio",
-              content: "https://www.example.com/audio3.mp3", // Example audio URL
-            },
-            {
-              title: "Mediating Conflicts",
-              type: "pdf",
-              content: "https://www.example.com/reading3.pdf", // Example PDF URL
-            },
-          ],
-        },
-      ],
-    },
-    {
-      title: "Celebrate Team Achievements",
-      duration: "19 min",
-      category: "Emotional Intelligence",
-      professionals: [
-        {
-          name: "Howard Schultz",
-          role: "Former Starbucks CEO",
-          image: img3,
-          shortRole: "Starbucks CEO",
-        },
-        {
-          name: "Elaine Welteroth",
-          role: "Multimedia Icon",
-          image: img2,
-          shortRole: "Product Manager",
-        },
-      ],
-      callToAction: "Sign Up To Practice Live",
-      sections: [
-        {
-          title: "Introduction to Team Building",
-          lessons: [
-            {
-              title: "What is Team Building?",
-              type: "text",
-              content:
-                "This lesson covers the fundamentals of team building, including the importance of collaboration and trust.",
-            },
-            {
-              title: "Understanding Emotional Intelligence",
-              type: "video",
-              content: "https://www.example.com/video1.mp4", // Example video URL
-            },
-            {
-              title: "Team Dynamics",
-              type: "audio",
-              content: "https://www.example.com/audio1.mp3", // Example audio URL
-            },
-          ],
-        },
-        {
-          title: "Advanced Team Strategies",
-          lessons: [
-            {
-              title: "Conflict Resolution in Teams",
-              type: "video",
-              content: "https://www.example.com/video2.mp4", // Example video URL
-            },
-            {
-              title: "Creating an Effective Team Culture",
-              type: "pdf",
-              content: "https://www.example.com/reading1.pdf", // Example PDF URL
-            },
-          ],
-        },
-      ],
-    },
-    {
-      title: "Facilitate Successful Meetings",
-      duration: "22 min",
-      category: "Leadership Skills",
-      professionals: [
-        {
-          name: "Melody Hobson",
-          role: "President of Ariel Investments",
-          image: img1,
-          shortRole: "Product Manager",
-        },
-        {
-          name: "James Clear",
-          role: "Author of Atomic Habits",
-          image: img1,
-          shortRole: "Starbucks CEO",
-        },
-      ],
-      callToAction: "Sign Up To Practice Live",
-      sections: [
-        {
-          title: "Planning and Structuring Meetings",
-          lessons: [
-            {
-              title: "The Art of Meeting Planning",
-              type: "text",
-              content:
-                "This lesson covers the key components of effective meeting planning, from setting agendas to identifying objectives.",
-            },
-            {
-              title: "Setting Clear Objectives",
-              type: "video",
-              content: "https://www.example.com/video3.mp4", // Example video URL
-            },
-          ],
-        },
-        {
-          title: "Facilitating Effective Discussions",
-          lessons: [
-            {
-              title: "Managing Group Dynamics",
-              type: "audio",
-              content: "https://www.example.com/audio2.mp3", // Example audio URL
-            },
-            {
-              title: "Dealing with Conflict in Meetings",
-              type: "pdf",
-              content: "https://www.example.com/reading2.pdf", // Example PDF URL
-            },
-          ],
-        },
-      ],
-    },
-    {
-      title: "Master Conflict Resolution",
-      duration: "18 min",
-      category: "Workplace Strategies",
-      professionals: [
-        {
-          name: "Susan Cain",
-          role: "Author of Quiet",
-          image: img2,
-          shortRole: "Starbucks CEO",
-        },
-        {
-          name: "Adam Grant",
-          role: "Organizational Psychologist",
-          image: img2,
-          shortRole: "Product Manager",
-        },
-      ],
-      callToAction: "Sign Up To Practice Live",
-      sections: [
-        {
-          title: "Understanding Conflict",
-          lessons: [
-            {
-              title: "Types of Conflict in the Workplace",
-              type: "text",
-              content:
-                "This lesson introduces the different types of conflict that can arise in a workplace setting.",
-            },
-            {
-              title: "Emotional Intelligence in Conflict Resolution",
-              type: "video",
-              content: "https://www.example.com/video4.mp4", // Example video URL
-            },
-          ],
-        },
-        {
-          title: "Advanced Conflict Resolution Skills",
-          lessons: [
-            {
-              title: "Effective Communication Techniques",
-              type: "audio",
-              content: "https://www.example.com/audio3.mp3", // Example audio URL
-            },
-            {
-              title: "Mediating Conflicts",
-              type: "pdf",
-              content: "https://www.example.com/reading3.pdf", // Example PDF URL
-            },
-          ],
-        },
-      ],
-    },
-    {
-      title: "Celebrate Team Achievements",
-      duration: "19 min",
-      category: "Emotional Intelligence",
-      professionals: [
-        {
-          name: "Howard Schultz",
-          role: "Former Starbucks CEO",
-          image: img1,
-          shortRole: "Starbucks CEO",
-        },
-        {
-          name: "Elaine Welteroth",
-          role: "Multimedia Icon",
-          image: img2,
-          shortRole: "Product Manager",
-        },
-      ],
-      callToAction: "Sign Up To Practice Live",
-      sections: [
-        {
-          title: "Introduction to Team Building",
-          lessons: [
-            {
-              title: "What is Team Building?",
-              type: "text",
-              content:
-                "This lesson covers the fundamentals of team building, including the importance of collaboration and trust.",
-            },
-            {
-              title: "Understanding Emotional Intelligence",
-              type: "video",
-              content: "https://www.example.com/video1.mp4", // Example video URL
-            },
-            {
-              title: "Team Dynamics",
-              type: "audio",
-              content: "https://www.example.com/audio1.mp3", // Example audio URL
-            },
-          ],
-        },
-        {
-          title: "Advanced Team Strategies",
-          lessons: [
-            {
-              title: "Conflict Resolution in Teams",
-              type: "video",
-              content: "https://www.example.com/video2.mp4", // Example video URL
-            },
-            {
-              title: "Creating an Effective Team Culture",
-              type: "pdf",
-              content: "https://www.example.com/reading1.pdf", // Example PDF URL
-            },
-          ],
-        },
-      ],
-    },
-    {
-      title: "Facilitate Successful Meetings",
-      duration: "22 min",
-      category: "Leadership Skills",
-      professionals: [
-        {
-          name: "Melody Hobson",
-          role: "President of Ariel Investments",
-          image: img3,
-          shortRole: "Product Manager",
-        },
-        {
-          name: "James Clear",
-          role: "Author of Atomic Habits",
-          image: img1,
-          shortRole: "Starbucks CEO",
-        },
-      ],
-      callToAction: "Sign Up To Practice Live",
-      sections: [
-        {
-          title: "Planning and Structuring Meetings",
-          lessons: [
-            {
-              title: "The Art of Meeting Planning",
-              type: "text",
-              content:
-                "This lesson covers the key components of effective meeting planning, from setting agendas to identifying objectives.",
-            },
-            {
-              title: "Setting Clear Objectives",
-              type: "video",
-              content: "https://www.example.com/video3.mp4", // Example video URL
-            },
-          ],
-        },
-        {
-          title: "Facilitating Effective Discussions",
-          lessons: [
-            {
-              title: "Managing Group Dynamics",
-              type: "audio",
-              content: "https://www.example.com/audio2.mp3", // Example audio URL
-            },
-            {
-              title: "Dealing with Conflict in Meetings",
-              type: "pdf",
-              content: "https://www.example.com/reading2.pdf", // Example PDF URL
-            },
-          ],
-        },
-      ],
-    },
-    {
-      title: "Master Conflict Resolution",
-      duration: "18 min",
-      category: "Workplace Strategies",
-      professionals: [
-        {
-          name: "Susan Cain",
-          role: "Author of Quiet",
-          image: img2,
-          shortRole: "Starbucks CEO",
-        },
-        {
-          name: "Adam Grant",
-          role: "Organizational Psychologist",
-          image: img2,
-          shortRole: "Product Manager",
-        },
-      ],
-      callToAction: "Sign Up To Practice Live",
-      sections: [
-        {
-          title: "Understanding Conflict",
-          lessons: [
-            {
-              title: "Types of Conflict in the Workplace",
-              type: "text",
-              content:
-                "This lesson introduces the different types of conflict that can arise in a workplace setting.",
-            },
-            {
-              title: "Emotional Intelligence in Conflict Resolution",
-              type: "video",
-              content: "https://www.example.com/video4.mp4", // Example video URL
-            },
-          ],
-        },
-        {
-          title: "Advanced Conflict Resolution Skills",
-          lessons: [
-            {
-              title: "Effective Communication Techniques",
-              type: "audio",
-              content: "https://www.example.com/audio3.mp3", // Example audio URL
-            },
-            {
-              title: "Mediating Conflicts",
-              type: "pdf",
-              content: "https://www.example.com/reading3.pdf", // Example PDF URL
-            },
-          ],
-        },
-      ],
-    },
-    {
-      title: "Celebrate Team Achievements",
-      duration: "19 min",
-      category: "Emotional Intelligence",
-      professionals: [
-        {
-          name: "Howard Schultz",
-          role: "Former Starbucks CEO",
-          image: img1,
-          shortRole: "Starbucks CEO",
-        },
-        {
-          name: "Elaine Welteroth",
-          role: "Multimedia Icon",
-          image: img2,
-          shortRole: "Product Manager",
-        },
-      ],
-      callToAction: "Sign Up To Practice Live",
-      sections: [
-        {
-          title: "Introduction to Team Building",
-          lessons: [
-            {
-              title: "What is Team Building?",
-              type: "text",
-              content:
-                "This lesson covers the fundamentals of team building, including the importance of collaboration and trust.",
-            },
-            {
-              title: "Understanding Emotional Intelligence",
-              type: "video",
-              content: "https://www.example.com/video1.mp4", // Example video URL
-            },
-            {
-              title: "Team Dynamics",
-              type: "audio",
-              content: "https://www.example.com/audio1.mp3", // Example audio URL
-            },
-          ],
-        },
-        {
-          title: "Advanced Team Strategies",
-          lessons: [
-            {
-              title: "Conflict Resolution in Teams",
-              type: "video",
-              content: "https://www.example.com/video2.mp4", // Example video URL
-            },
-            {
-              title: "Creating an Effective Team Culture",
-              type: "pdf",
-              content: "https://www.example.com/reading1.pdf", // Example PDF URL
-            },
-          ],
-        },
-      ],
-    },
-    {
-      title: "Facilitate Successful Meetings",
-      duration: "22 min",
-      category: "Leadership Skills",
-      professionals: [
-        {
-          name: "Melody Hobson",
-          role: "President of Ariel Investments",
-          image: img3,
-          shortRole: "Product Manager",
-        },
-        {
-          name: "James Clear",
-          role: "Author of Atomic Habits",
-          image: img1,
-          shortRole: "Starbucks CEO",
-        },
-      ],
-      callToAction: "Sign Up To Practice Live",
-      sections: [
-        {
-          title: "Planning and Structuring Meetings",
-          lessons: [
-            {
-              title: "The Art of Meeting Planning",
-              type: "text",
-              content:
-                "This lesson covers the key components of effective meeting planning, from setting agendas to identifying objectives.",
-            },
-            {
-              title: "Setting Clear Objectives",
-              type: "video",
-              content: "https://www.example.com/video3.mp4", // Example video URL
-            },
-          ],
-        },
-        {
-          title: "Facilitating Effective Discussions",
-          lessons: [
-            {
-              title: "Managing Group Dynamics",
-              type: "audio",
-              content: "https://www.example.com/audio2.mp3", // Example audio URL
-            },
-            {
-              title: "Dealing with Conflict in Meetings",
-              type: "pdf",
-              content: "https://www.example.com/reading2.pdf", // Example PDF URL
-            },
-          ],
-        },
-      ],
-    },
-    {
-      title: "Master Conflict Resolution",
-      duration: "18 min",
-      category: "Workplace Strategies",
-      professionals: [
-        {
-          name: "Susan Cain",
-          role: "Author of Quiet",
-          image: img2,
-          shortRole: "Starbucks CEO",
-        },
-        {
-          name: "Adam Grant",
-          role: "Organizational Psychologist",
-          image: img1,
-          shortRole: "Product Manager",
-        },
-      ],
-      callToAction: "Sign Up To Practice Live",
-      sections: [
-        {
-          title: "Understanding Conflict",
-          lessons: [
-            {
-              title: "Types of Conflict in the Workplace",
-              type: "text",
-              content:
-                "This lesson introduces the different types of conflict that can arise in a workplace setting.",
-            },
-            {
-              title: "Emotional Intelligence in Conflict Resolution",
-              type: "video",
-              content: "https://www.example.com/video4.mp4", // Example video URL
-            },
-          ],
-        },
-        {
-          title: "Advanced Conflict Resolution Skills",
-          lessons: [
-            {
-              title: "Effective Communication Techniques",
-              type: "audio",
-              content: "https://www.example.com/audio3.mp3", // Example audio URL
-            },
-            {
-              title: "Mediating Conflicts",
-              type: "pdf",
-              content: "https://www.example.com/reading3.pdf", // Example PDF URL
-            },
-          ],
-        },
-      ],
-    },
-    {
-      title: "Celebrate Team Achievements",
-      duration: "19 min",
-      category: "Emotional Intelligence",
-      professionals: [
-        {
-          name: "Howard Schultz",
-          role: "Former Starbucks CEO",
-          image: img3,
-          shortRole: "Starbucks CEO",
-        },
-        {
-          name: "Elaine Welteroth",
-          role: "Multimedia Icon",
-          image: img2,
-          shortRole: "Product Manager",
-        },
-      ],
-      callToAction: "Sign Up To Practice Live",
-      sections: [
-        {
-          title: "Introduction to Team Building",
-          lessons: [
-            {
-              title: "What is Team Building?",
-              type: "text",
-              content:
-                "This lesson covers the fundamentals of team building, including the importance of collaboration and trust.",
-            },
-            {
-              title: "Understanding Emotional Intelligence",
-              type: "video",
-              content: "https://www.example.com/video1.mp4", // Example video URL
-            },
-            {
-              title: "Team Dynamics",
-              type: "audio",
-              content: "https://www.example.com/audio1.mp3", // Example audio URL
-            },
-          ],
-        },
-        {
-          title: "Advanced Team Strategies",
-          lessons: [
-            {
-              title: "Conflict Resolution in Teams",
-              type: "video",
-              content: "https://www.example.com/video2.mp4", // Example video URL
-            },
-            {
-              title: "Creating an Effective Team Culture",
-              type: "pdf",
-              content: "https://www.example.com/reading1.pdf", // Example PDF URL
-            },
-          ],
-        },
-      ],
-    },
-    {
-      title: "Facilitate Successful Meetings",
-      duration: "22 min",
-      category: "Leadership Skills",
-      professionals: [
-        {
-          name: "Melody Hobson",
-          role: "President of Ariel Investments",
-          image: img2,
-          shortRole: "Product Manager",
-        },
-        {
-          name: "James Clear",
-          role: "Author of Atomic Habits",
-          image: img1,
-          shortRole: "Starbucks CEO",
-        },
-      ],
-      callToAction: "Sign Up To Practice Live",
-      sections: [
-        {
-          title: "Planning and Structuring Meetings",
-          lessons: [
-            {
-              title: "The Art of Meeting Planning",
-              type: "text",
-              content:
-                "This lesson covers the key components of effective meeting planning, from setting agendas to identifying objectives.",
-            },
-            {
-              title: "Setting Clear Objectives",
-              type: "video",
-              content: "https://www.example.com/video3.mp4", // Example video URL
-            },
-          ],
-        },
-        {
-          title: "Facilitating Effective Discussions",
-          lessons: [
-            {
-              title: "Managing Group Dynamics",
-              type: "audio",
-              content: "https://www.example.com/audio2.mp3", // Example audio URL
-            },
-            {
-              title: "Dealing with Conflict in Meetings",
-              type: "pdf",
-              content: "https://www.example.com/reading2.pdf", // Example PDF URL
-            },
-          ],
-        },
-      ],
-    },
-    {
-      title: "Master Conflict Resolution",
-      duration: "18 min",
-      category: "Workplace Strategies",
-      professionals: [
-        {
-          name: "Susan Cain",
-          role: "Author of Quiet",
-          image: img1,
-          shortRole: "Starbucks CEO",
-        },
-        {
-          name: "Adam Grant",
-          role: "Organizational Psychologist",
-          image: img2,
-          shortRole: "Product Manager",
-        },
-      ],
-      callToAction: "Sign Up To Practice Live",
-      sections: [
-        {
-          title: "Understanding Conflict",
-          lessons: [
-            {
-              title: "Types of Conflict in the Workplace",
-              type: "text",
-              content:
-                "This lesson introduces the different types of conflict that can arise in a workplace setting.",
-            },
-            {
-              title: "Emotional Intelligence in Conflict Resolution",
-              type: "video",
-              content: "https://www.example.com/video4.mp4", // Example video URL
-            },
-          ],
-        },
-        {
-          title: "Advanced Conflict Resolution Skills",
-          lessons: [
-            {
-              title: "Effective Communication Techniques",
-              type: "audio",
-              content: "https://www.example.com/audio3.mp3", // Example audio URL
-            },
-            {
-              title: "Mediating Conflicts",
-              type: "pdf",
-              content: "https://www.example.com/reading3.pdf", // Example PDF URL
-            },
-          ],
-        },
-      ],
-    },
-    {
-      title: "Celebrate Team Achievements",
-      duration: "19 min",
-      category: "Emotional Intelligence",
-      professionals: [
-        {
-          name: "Howard Schultz",
-          role: "Former Starbucks CEO",
-          image: img3,
-          shortRole: "Starbucks CEO",
-        },
-        {
-          name: "Elaine Welteroth",
-          role: "Multimedia Icon",
-          image: img2,
-          shortRole: "Product Manager",
-        },
-      ],
-      callToAction: "Sign Up To Practice Live",
-      sections: [
-        {
-          title: "Introduction to Team Building",
-          lessons: [
-            {
-              title: "What is Team Building?",
-              type: "text",
-              content:
-                "This lesson covers the fundamentals of team building, including the importance of collaboration and trust.",
-            },
-            {
-              title: "Understanding Emotional Intelligence",
-              type: "video",
-              content: "https://www.example.com/video1.mp4", // Example video URL
-            },
-            {
-              title: "Team Dynamics",
-              type: "audio",
-              content: "https://www.example.com/audio1.mp3", // Example audio URL
-            },
-          ],
-        },
-        {
-          title: "Advanced Team Strategies",
-          lessons: [
-            {
-              title: "Conflict Resolution in Teams",
-              type: "video",
-              content: "https://www.example.com/video2.mp4", // Example video URL
-            },
-            {
-              title: "Creating an Effective Team Culture",
-              type: "pdf",
-              content: "https://www.example.com/reading1.pdf", // Example PDF URL
-            },
-          ],
-        },
-      ],
-    },
-    {
-      title: "Facilitate Successful Meetings",
-      duration: "22 min",
-      category: "Leadership Skills",
-      professionals: [
-        {
-          name: "Melody Hobson",
-          role: "President of Ariel Investments",
-          image: img2,
-          shortRole: "Product Manager",
-        },
-        {
-          name: "James Clear",
-          role: "Author of Atomic Habits",
-          image: img1,
-          shortRole: "Starbucks CEO",
-        },
-      ],
-      callToAction: "Sign Up To Practice Live",
-      sections: [
-        {
-          title: "Planning and Structuring Meetings",
-          lessons: [
-            {
-              title: "The Art of Meeting Planning",
-              type: "text",
-              content:
-                "This lesson covers the key components of effective meeting planning, from setting agendas to identifying objectives.",
-            },
-            {
-              title: "Setting Clear Objectives",
-              type: "video",
-              content: "https://www.example.com/video3.mp4", // Example video URL
-            },
-          ],
-        },
-        {
-          title: "Facilitating Effective Discussions",
-          lessons: [
-            {
-              title: "Managing Group Dynamics",
-              type: "audio",
-              content: "https://www.example.com/audio2.mp3", // Example audio URL
-            },
-            {
-              title: "Dealing with Conflict in Meetings",
-              type: "pdf",
-              content: "https://www.example.com/reading2.pdf", // Example PDF URL
-            },
-          ],
-        },
-      ],
-    },
-    {
-      title: "Master Conflict Resolution",
-      duration: "18 min",
-      category: "Workplace Strategies",
-      professionals: [
-        {
-          name: "Susan Cain",
-          role: "Author of Quiet",
-          image: img1,
-          shortRole: "Starbucks CEO",
-        },
-        {
-          name: "Adam Grant",
-          role: "Organizational Psychologist",
-          image: img2,
-          shortRole: "Product Manager",
-        },
-      ],
-      callToAction: "Sign Up To Practice Live",
-      sections: [
-        {
-          title: "Understanding Conflict",
-          lessons: [
-            {
-              title: "Types of Conflict in the Workplace",
-              type: "text",
-              content:
-                "This lesson introduces the different types of conflict that can arise in a workplace setting.",
-            },
-            {
-              title: "Emotional Intelligence in Conflict Resolution",
-              type: "video",
-              content: "https://www.example.com/video4.mp4", // Example video URL
-            },
-          ],
-        },
-        {
-          title: "Advanced Conflict Resolution Skills",
-          lessons: [
-            {
-              title: "Effective Communication Techniques",
-              type: "audio",
-              content: "https://www.example.com/audio3.mp3", // Example audio URL
-            },
-            {
-              title: "Mediating Conflicts",
-              type: "pdf",
-              content: "https://www.example.com/reading3.pdf", // Example PDF URL
-            },
-          ],
-        },
-      ],
-    },
-    {
-      title: "Celebrate Team Achievements",
-      duration: "19 min",
-      category: "Emotional Intelligence",
-      professionals: [
-        {
-          name: "Howard Schultz",
-          role: "Former Starbucks CEO",
-          image: img1,
-          shortRole: "Starbucks CEO",
-        },
-        {
-          name: "Elaine Welteroth",
-          role: "Multimedia Icon",
-          image: img2,
-          shortRole: "Product Manager",
-        },
-      ],
-      callToAction: "Sign Up To Practice Live",
-      sections: [
-        {
-          title: "Introduction to Team Building",
-          lessons: [
-            {
-              title: "What is Team Building?",
-              type: "text",
-              content:
-                "This lesson covers the fundamentals of team building, including the importance of collaboration and trust.",
-            },
-            {
-              title: "Understanding Emotional Intelligence",
-              type: "video",
-              content: "https://www.example.com/video1.mp4", // Example video URL
-            },
-            {
-              title: "Team Dynamics",
-              type: "audio",
-              content: "https://www.example.com/audio1.mp3", // Example audio URL
-            },
-          ],
-        },
-        {
-          title: "Advanced Team Strategies",
-          lessons: [
-            {
-              title: "Conflict Resolution in Teams",
-              type: "video",
-              content: "https://www.example.com/video2.mp4", // Example video URL
-            },
-            {
-              title: "Creating an Effective Team Culture",
-              type: "pdf",
-              content: "https://www.example.com/reading1.pdf", // Example PDF URL
-            },
-          ],
-        },
-      ],
-    },
-    {
-      title: "Facilitate Successful Meetings",
-      duration: "22 min",
-      category: "Leadership Skills",
-      professionals: [
-        {
-          name: "Melody Hobson",
-          role: "President of Ariel Investments",
-          image: img3,
-          shortRole: "Product Manager",
-        },
-        {
-          name: "James Clear",
-          role: "Author of Atomic Habits",
-          image: img1,
-          shortRole: "Starbucks CEO",
-        },
-      ],
-      callToAction: "Sign Up To Practice Live",
-      sections: [
-        {
-          title: "Planning and Structuring Meetings",
-          lessons: [
-            {
-              title: "The Art of Meeting Planning",
-              type: "text",
-              content:
-                "This lesson covers the key components of effective meeting planning, from setting agendas to identifying objectives.",
-            },
-            {
-              title: "Setting Clear Objectives",
-              type: "video",
-              content: "https://www.example.com/video3.mp4", // Example video URL
-            },
-          ],
-        },
-        {
-          title: "Facilitating Effective Discussions",
-          lessons: [
-            {
-              title: "Managing Group Dynamics",
-              type: "audio",
-              content: "https://www.example.com/audio2.mp3", // Example audio URL
-            },
-            {
-              title: "Dealing with Conflict in Meetings",
-              type: "pdf",
-              content: "https://www.example.com/reading2.pdf", // Example PDF URL
-            },
-          ],
-        },
-      ],
-    },
-    {
-      title: "Master Conflict Resolution",
-      duration: "18 min",
-      category: "Workplace Strategies",
-      professionals: [
-        {
-          name: "Susan Cain",
-          role: "Author of Quiet",
-          image: img3,
-          shortRole: "Starbucks CEO",
-        },
-        {
-          name: "Adam Grant",
-          role: "Organizational Psychologist",
-          image: img2,
-          shortRole: "Product Manager",
-        },
-      ],
-      callToAction: "Sign Up To Practice Live",
-      sections: [
-        {
-          title: "Understanding Conflict",
-          lessons: [
-            {
-              title: "Types of Conflict in the Workplace",
-              type: "text",
-              content:
-                "This lesson introduces the different types of conflict that can arise in a workplace setting.",
-            },
-            {
-              title: "Emotional Intelligence in Conflict Resolution",
-              type: "video",
-              content: "https://www.example.com/video4.mp4", // Example video URL
-            },
-          ],
-        },
-        {
-          title: "Advanced Conflict Resolution Skills",
-          lessons: [
-            {
-              title: "Effective Communication Techniques",
-              type: "audio",
-              content: "https://www.example.com/audio3.mp3", // Example audio URL
-            },
-            {
-              title: "Mediating Conflicts",
-              type: "pdf",
-              content: "https://www.example.com/reading3.pdf", // Example PDF URL
-            },
-          ],
-        },
-      ],
-    },
-    // Add additional courses here with sections and lessons as needed
-  ];
+  // const carouselData = [
+  //   {
+  //     title: "Celebrate Team Achievements",
+  //     duration: "19 min",
+  //     category: "Emotional Intelligence",
+  //     professionals: [
+  //       {
+  //         name: "Howard Schultz",
+  //         role: "Former Starbucks CEO",
+  //         image: img1,
+  //         shortRole: "Starbucks CEO",
+  //       },
+  //       {
+  //         name: "Elaine Welteroth",
+  //         role: "Multimedia Icon",
+  //         image: img2,
+  //         shortRole: "Product Manager",
+  //       },
+  //     ],
+  //     callToAction: "Sign Up To Practice Live",
+  //     sections: [
+  //       {
+  //         title: "Introduction to Team Building",
+  //         lessons: [
+  //           {
+  //             title: "What is Team Building?",
+  //             type: "text",
+  //             content:
+  //               "This lesson covers the fundamentals of team building, including the importance of collaboration and trust.",
+  //           },
+  //           {
+  //             title: "Understanding Emotional Intelligence",
+  //             type: "video",
+  //             content: "https://www.example.com/video1.mp4", // Example video URL
+  //           },
+  //           {
+  //             title: "Team Dynamics",
+  //             type: "audio",
+  //             content: "https://www.example.com/audio1.mp3", // Example audio URL
+  //           },
+  //         ],
+  //       },
+  //       {
+  //         title: "Advanced Team Strategies",
+  //         lessons: [
+  //           {
+  //             title: "Conflict Resolution in Teams",
+  //             type: "video",
+  //             content: "https://www.example.com/video2.mp4", // Example video URL
+  //           },
+  //           {
+  //             title: "Creating an Effective Team Culture",
+  //             type: "pdf",
+  //             content: "https://www.example.com/reading1.pdf", // Example PDF URL
+  //           },
+  //         ],
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     title: "Facilitate Successful Meetings",
+  //     duration: "22 min",
+  //     category: "Leadership Skills",
+  //     professionals: [
+  //       {
+  //         name: "Melody Hobson",
+  //         role: "President of Ariel Investments",
+  //         image: img3,
+  //         shortRole: "Product Manager",
+  //       },
+  //       {
+  //         name: "James Clear",
+  //         role: "Author of Atomic Habits",
+  //         image: img1,
+  //         shortRole: "Starbucks CEO",
+  //       },
+  //     ],
+  //     callToAction: "Sign Up To Practice Live",
+  //     sections: [
+  //       {
+  //         title: "Planning and Structuring Meetings",
+  //         lessons: [
+  //           {
+  //             title: "The Art of Meeting Planning",
+  //             type: "text",
+  //             content:
+  //               "This lesson covers the key components of effective meeting planning, from setting agendas to identifying objectives.",
+  //           },
+  //           {
+  //             title: "Setting Clear Objectives",
+  //             type: "video",
+  //             content: "https://www.example.com/video3.mp4", // Example video URL
+  //           },
+  //         ],
+  //       },
+  //       {
+  //         title: "Facilitating Effective Discussions",
+  //         lessons: [
+  //           {
+  //             title: "Managing Group Dynamics",
+  //             type: "audio",
+  //             content: "https://www.example.com/audio2.mp3", // Example audio URL
+  //           },
+  //           {
+  //             title: "Dealing with Conflict in Meetings",
+  //             type: "pdf",
+  //             content: "https://www.example.com/reading2.pdf", // Example PDF URL
+  //           },
+  //         ],
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     title: "Master Conflict Resolution",
+  //     duration: "18 min",
+  //     category: "Workplace Strategies",
+  //     professionals: [
+  //       {
+  //         name: "Susan Cain",
+  //         role: "Author of Quiet",
+  //         image: img1,
+  //         shortRole: "Starbucks CEO",
+  //       },
+  //       {
+  //         name: "Adam Grant",
+  //         role: "Organizational Psychologist",
+  //         image: img2,
+  //         shortRole: "Product Manager",
+  //       },
+  //     ],
+  //     callToAction: "Sign Up To Practice Live",
+  //     sections: [
+  //       {
+  //         title: "Understanding Conflict",
+  //         lessons: [
+  //           {
+  //             title: "Types of Conflict in the Workplace",
+  //             type: "text",
+  //             content:
+  //               "This lesson introduces the different types of conflict that can arise in a workplace setting.",
+  //           },
+  //           {
+  //             title: "Emotional Intelligence in Conflict Resolution",
+  //             type: "video",
+  //             content: "https://www.example.com/video4.mp4", // Example video URL
+  //           },
+  //         ],
+  //       },
+  //       {
+  //         title: "Advanced Conflict Resolution Skills",
+  //         lessons: [
+  //           {
+  //             title: "Effective Communication Techniques",
+  //             type: "audio",
+  //             content: "https://www.example.com/audio3.mp3", // Example audio URL
+  //           },
+  //           {
+  //             title: "Mediating Conflicts",
+  //             type: "pdf",
+  //             content: "https://www.example.com/reading3.pdf", // Example PDF URL
+  //           },
+  //         ],
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     title: "Celebrate Team Achievements",
+  //     duration: "19 min",
+  //     category: "Emotional Intelligence",
+  //     professionals: [
+  //       {
+  //         name: "Howard Schultz",
+  //         role: "Former Starbucks CEO",
+  //         image: img3,
+  //         shortRole: "Starbucks CEO",
+  //       },
+  //       {
+  //         name: "Elaine Welteroth",
+  //         role: "Multimedia Icon",
+  //         image: img2,
+  //         shortRole: "Product Manager",
+  //       },
+  //     ],
+  //     callToAction: "Sign Up To Practice Live",
+  //     sections: [
+  //       {
+  //         title: "Introduction to Team Building",
+  //         lessons: [
+  //           {
+  //             title: "What is Team Building?",
+  //             type: "text",
+  //             content:
+  //               "This lesson covers the fundamentals of team building, including the importance of collaboration and trust.",
+  //           },
+  //           {
+  //             title: "Understanding Emotional Intelligence",
+  //             type: "video",
+  //             content: "https://www.example.com/video1.mp4", // Example video URL
+  //           },
+  //           {
+  //             title: "Team Dynamics",
+  //             type: "audio",
+  //             content: "https://www.example.com/audio1.mp3", // Example audio URL
+  //           },
+  //         ],
+  //       },
+  //       {
+  //         title: "Advanced Team Strategies",
+  //         lessons: [
+  //           {
+  //             title: "Conflict Resolution in Teams",
+  //             type: "video",
+  //             content: "https://www.example.com/video2.mp4", // Example video URL
+  //           },
+  //           {
+  //             title: "Creating an Effective Team Culture",
+  //             type: "pdf",
+  //             content: "https://www.example.com/reading1.pdf", // Example PDF URL
+  //           },
+  //         ],
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     title: "Facilitate Successful Meetings",
+  //     duration: "22 min",
+  //     category: "Leadership Skills",
+  //     professionals: [
+  //       {
+  //         name: "Melody Hobson",
+  //         role: "President of Ariel Investments",
+  //         image: img1,
+  //         shortRole: "Product Manager",
+  //       },
+  //       {
+  //         name: "James Clear",
+  //         role: "Author of Atomic Habits",
+  //         image: img1,
+  //         shortRole: "Starbucks CEO",
+  //       },
+  //     ],
+  //     callToAction: "Sign Up To Practice Live",
+  //     sections: [
+  //       {
+  //         title: "Planning and Structuring Meetings",
+  //         lessons: [
+  //           {
+  //             title: "The Art of Meeting Planning",
+  //             type: "text",
+  //             content:
+  //               "This lesson covers the key components of effective meeting planning, from setting agendas to identifying objectives.",
+  //           },
+  //           {
+  //             title: "Setting Clear Objectives",
+  //             type: "video",
+  //             content: "https://www.example.com/video3.mp4", // Example video URL
+  //           },
+  //         ],
+  //       },
+  //       {
+  //         title: "Facilitating Effective Discussions",
+  //         lessons: [
+  //           {
+  //             title: "Managing Group Dynamics",
+  //             type: "audio",
+  //             content: "https://www.example.com/audio2.mp3", // Example audio URL
+  //           },
+  //           {
+  //             title: "Dealing with Conflict in Meetings",
+  //             type: "pdf",
+  //             content: "https://www.example.com/reading2.pdf", // Example PDF URL
+  //           },
+  //         ],
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     title: "Master Conflict Resolution",
+  //     duration: "18 min",
+  //     category: "Workplace Strategies",
+  //     professionals: [
+  //       {
+  //         name: "Susan Cain",
+  //         role: "Author of Quiet",
+  //         image: img2,
+  //         shortRole: "Starbucks CEO",
+  //       },
+  //       {
+  //         name: "Adam Grant",
+  //         role: "Organizational Psychologist",
+  //         image: img2,
+  //         shortRole: "Product Manager",
+  //       },
+  //     ],
+  //     callToAction: "Sign Up To Practice Live",
+  //     sections: [
+  //       {
+  //         title: "Understanding Conflict",
+  //         lessons: [
+  //           {
+  //             title: "Types of Conflict in the Workplace",
+  //             type: "text",
+  //             content:
+  //               "This lesson introduces the different types of conflict that can arise in a workplace setting.",
+  //           },
+  //           {
+  //             title: "Emotional Intelligence in Conflict Resolution",
+  //             type: "video",
+  //             content: "https://www.example.com/video4.mp4", // Example video URL
+  //           },
+  //         ],
+  //       },
+  //       {
+  //         title: "Advanced Conflict Resolution Skills",
+  //         lessons: [
+  //           {
+  //             title: "Effective Communication Techniques",
+  //             type: "audio",
+  //             content: "https://www.example.com/audio3.mp3", // Example audio URL
+  //           },
+  //           {
+  //             title: "Mediating Conflicts",
+  //             type: "pdf",
+  //             content: "https://www.example.com/reading3.pdf", // Example PDF URL
+  //           },
+  //         ],
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     title: "Celebrate Team Achievements",
+  //     duration: "19 min",
+  //     category: "Emotional Intelligence",
+  //     professionals: [
+  //       {
+  //         name: "Howard Schultz",
+  //         role: "Former Starbucks CEO",
+  //         image: img1,
+  //         shortRole: "Starbucks CEO",
+  //       },
+  //       {
+  //         name: "Elaine Welteroth",
+  //         role: "Multimedia Icon",
+  //         image: img2,
+  //         shortRole: "Product Manager",
+  //       },
+  //     ],
+  //     callToAction: "Sign Up To Practice Live",
+  //     sections: [
+  //       {
+  //         title: "Introduction to Team Building",
+  //         lessons: [
+  //           {
+  //             title: "What is Team Building?",
+  //             type: "text",
+  //             content:
+  //               "This lesson covers the fundamentals of team building, including the importance of collaboration and trust.",
+  //           },
+  //           {
+  //             title: "Understanding Emotional Intelligence",
+  //             type: "video",
+  //             content: "https://www.example.com/video1.mp4", // Example video URL
+  //           },
+  //           {
+  //             title: "Team Dynamics",
+  //             type: "audio",
+  //             content: "https://www.example.com/audio1.mp3", // Example audio URL
+  //           },
+  //         ],
+  //       },
+  //       {
+  //         title: "Advanced Team Strategies",
+  //         lessons: [
+  //           {
+  //             title: "Conflict Resolution in Teams",
+  //             type: "video",
+  //             content: "https://www.example.com/video2.mp4", // Example video URL
+  //           },
+  //           {
+  //             title: "Creating an Effective Team Culture",
+  //             type: "pdf",
+  //             content: "https://www.example.com/reading1.pdf", // Example PDF URL
+  //           },
+  //         ],
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     title: "Facilitate Successful Meetings",
+  //     duration: "22 min",
+  //     category: "Leadership Skills",
+  //     professionals: [
+  //       {
+  //         name: "Melody Hobson",
+  //         role: "President of Ariel Investments",
+  //         image: img3,
+  //         shortRole: "Product Manager",
+  //       },
+  //       {
+  //         name: "James Clear",
+  //         role: "Author of Atomic Habits",
+  //         image: img1,
+  //         shortRole: "Starbucks CEO",
+  //       },
+  //     ],
+  //     callToAction: "Sign Up To Practice Live",
+  //     sections: [
+  //       {
+  //         title: "Planning and Structuring Meetings",
+  //         lessons: [
+  //           {
+  //             title: "The Art of Meeting Planning",
+  //             type: "text",
+  //             content:
+  //               "This lesson covers the key components of effective meeting planning, from setting agendas to identifying objectives.",
+  //           },
+  //           {
+  //             title: "Setting Clear Objectives",
+  //             type: "video",
+  //             content: "https://www.example.com/video3.mp4", // Example video URL
+  //           },
+  //         ],
+  //       },
+  //       {
+  //         title: "Facilitating Effective Discussions",
+  //         lessons: [
+  //           {
+  //             title: "Managing Group Dynamics",
+  //             type: "audio",
+  //             content: "https://www.example.com/audio2.mp3", // Example audio URL
+  //           },
+  //           {
+  //             title: "Dealing with Conflict in Meetings",
+  //             type: "pdf",
+  //             content: "https://www.example.com/reading2.pdf", // Example PDF URL
+  //           },
+  //         ],
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     title: "Master Conflict Resolution",
+  //     duration: "18 min",
+  //     category: "Workplace Strategies",
+  //     professionals: [
+  //       {
+  //         name: "Susan Cain",
+  //         role: "Author of Quiet",
+  //         image: img2,
+  //         shortRole: "Starbucks CEO",
+  //       },
+  //       {
+  //         name: "Adam Grant",
+  //         role: "Organizational Psychologist",
+  //         image: img2,
+  //         shortRole: "Product Manager",
+  //       },
+  //     ],
+  //     callToAction: "Sign Up To Practice Live",
+  //     sections: [
+  //       {
+  //         title: "Understanding Conflict",
+  //         lessons: [
+  //           {
+  //             title: "Types of Conflict in the Workplace",
+  //             type: "text",
+  //             content:
+  //               "This lesson introduces the different types of conflict that can arise in a workplace setting.",
+  //           },
+  //           {
+  //             title: "Emotional Intelligence in Conflict Resolution",
+  //             type: "video",
+  //             content: "https://www.example.com/video4.mp4", // Example video URL
+  //           },
+  //         ],
+  //       },
+  //       {
+  //         title: "Advanced Conflict Resolution Skills",
+  //         lessons: [
+  //           {
+  //             title: "Effective Communication Techniques",
+  //             type: "audio",
+  //             content: "https://www.example.com/audio3.mp3", // Example audio URL
+  //           },
+  //           {
+  //             title: "Mediating Conflicts",
+  //             type: "pdf",
+  //             content: "https://www.example.com/reading3.pdf", // Example PDF URL
+  //           },
+  //         ],
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     title: "Celebrate Team Achievements",
+  //     duration: "19 min",
+  //     category: "Emotional Intelligence",
+  //     professionals: [
+  //       {
+  //         name: "Howard Schultz",
+  //         role: "Former Starbucks CEO",
+  //         image: img1,
+  //         shortRole: "Starbucks CEO",
+  //       },
+  //       {
+  //         name: "Elaine Welteroth",
+  //         role: "Multimedia Icon",
+  //         image: img2,
+  //         shortRole: "Product Manager",
+  //       },
+  //     ],
+  //     callToAction: "Sign Up To Practice Live",
+  //     sections: [
+  //       {
+  //         title: "Introduction to Team Building",
+  //         lessons: [
+  //           {
+  //             title: "What is Team Building?",
+  //             type: "text",
+  //             content:
+  //               "This lesson covers the fundamentals of team building, including the importance of collaboration and trust.",
+  //           },
+  //           {
+  //             title: "Understanding Emotional Intelligence",
+  //             type: "video",
+  //             content: "https://www.example.com/video1.mp4", // Example video URL
+  //           },
+  //           {
+  //             title: "Team Dynamics",
+  //             type: "audio",
+  //             content: "https://www.example.com/audio1.mp3", // Example audio URL
+  //           },
+  //         ],
+  //       },
+  //       {
+  //         title: "Advanced Team Strategies",
+  //         lessons: [
+  //           {
+  //             title: "Conflict Resolution in Teams",
+  //             type: "video",
+  //             content: "https://www.example.com/video2.mp4", // Example video URL
+  //           },
+  //           {
+  //             title: "Creating an Effective Team Culture",
+  //             type: "pdf",
+  //             content: "https://www.example.com/reading1.pdf", // Example PDF URL
+  //           },
+  //         ],
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     title: "Facilitate Successful Meetings",
+  //     duration: "22 min",
+  //     category: "Leadership Skills",
+  //     professionals: [
+  //       {
+  //         name: "Melody Hobson",
+  //         role: "President of Ariel Investments",
+  //         image: img3,
+  //         shortRole: "Product Manager",
+  //       },
+  //       {
+  //         name: "James Clear",
+  //         role: "Author of Atomic Habits",
+  //         image: img1,
+  //         shortRole: "Starbucks CEO",
+  //       },
+  //     ],
+  //     callToAction: "Sign Up To Practice Live",
+  //     sections: [
+  //       {
+  //         title: "Planning and Structuring Meetings",
+  //         lessons: [
+  //           {
+  //             title: "The Art of Meeting Planning",
+  //             type: "text",
+  //             content:
+  //               "This lesson covers the key components of effective meeting planning, from setting agendas to identifying objectives.",
+  //           },
+  //           {
+  //             title: "Setting Clear Objectives",
+  //             type: "video",
+  //             content: "https://www.example.com/video3.mp4", // Example video URL
+  //           },
+  //         ],
+  //       },
+  //       {
+  //         title: "Facilitating Effective Discussions",
+  //         lessons: [
+  //           {
+  //             title: "Managing Group Dynamics",
+  //             type: "audio",
+  //             content: "https://www.example.com/audio2.mp3", // Example audio URL
+  //           },
+  //           {
+  //             title: "Dealing with Conflict in Meetings",
+  //             type: "pdf",
+  //             content: "https://www.example.com/reading2.pdf", // Example PDF URL
+  //           },
+  //         ],
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     title: "Master Conflict Resolution",
+  //     duration: "18 min",
+  //     category: "Workplace Strategies",
+  //     professionals: [
+  //       {
+  //         name: "Susan Cain",
+  //         role: "Author of Quiet",
+  //         image: img2,
+  //         shortRole: "Starbucks CEO",
+  //       },
+  //       {
+  //         name: "Adam Grant",
+  //         role: "Organizational Psychologist",
+  //         image: img1,
+  //         shortRole: "Product Manager",
+  //       },
+  //     ],
+  //     callToAction: "Sign Up To Practice Live",
+  //     sections: [
+  //       {
+  //         title: "Understanding Conflict",
+  //         lessons: [
+  //           {
+  //             title: "Types of Conflict in the Workplace",
+  //             type: "text",
+  //             content:
+  //               "This lesson introduces the different types of conflict that can arise in a workplace setting.",
+  //           },
+  //           {
+  //             title: "Emotional Intelligence in Conflict Resolution",
+  //             type: "video",
+  //             content: "https://www.example.com/video4.mp4", // Example video URL
+  //           },
+  //         ],
+  //       },
+  //       {
+  //         title: "Advanced Conflict Resolution Skills",
+  //         lessons: [
+  //           {
+  //             title: "Effective Communication Techniques",
+  //             type: "audio",
+  //             content: "https://www.example.com/audio3.mp3", // Example audio URL
+  //           },
+  //           {
+  //             title: "Mediating Conflicts",
+  //             type: "pdf",
+  //             content: "https://www.example.com/reading3.pdf", // Example PDF URL
+  //           },
+  //         ],
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     title: "Celebrate Team Achievements",
+  //     duration: "19 min",
+  //     category: "Emotional Intelligence",
+  //     professionals: [
+  //       {
+  //         name: "Howard Schultz",
+  //         role: "Former Starbucks CEO",
+  //         image: img3,
+  //         shortRole: "Starbucks CEO",
+  //       },
+  //       {
+  //         name: "Elaine Welteroth",
+  //         role: "Multimedia Icon",
+  //         image: img2,
+  //         shortRole: "Product Manager",
+  //       },
+  //     ],
+  //     callToAction: "Sign Up To Practice Live",
+  //     sections: [
+  //       {
+  //         title: "Introduction to Team Building",
+  //         lessons: [
+  //           {
+  //             title: "What is Team Building?",
+  //             type: "text",
+  //             content:
+  //               "This lesson covers the fundamentals of team building, including the importance of collaboration and trust.",
+  //           },
+  //           {
+  //             title: "Understanding Emotional Intelligence",
+  //             type: "video",
+  //             content: "https://www.example.com/video1.mp4", // Example video URL
+  //           },
+  //           {
+  //             title: "Team Dynamics",
+  //             type: "audio",
+  //             content: "https://www.example.com/audio1.mp3", // Example audio URL
+  //           },
+  //         ],
+  //       },
+  //       {
+  //         title: "Advanced Team Strategies",
+  //         lessons: [
+  //           {
+  //             title: "Conflict Resolution in Teams",
+  //             type: "video",
+  //             content: "https://www.example.com/video2.mp4", // Example video URL
+  //           },
+  //           {
+  //             title: "Creating an Effective Team Culture",
+  //             type: "pdf",
+  //             content: "https://www.example.com/reading1.pdf", // Example PDF URL
+  //           },
+  //         ],
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     title: "Facilitate Successful Meetings",
+  //     duration: "22 min",
+  //     category: "Leadership Skills",
+  //     professionals: [
+  //       {
+  //         name: "Melody Hobson",
+  //         role: "President of Ariel Investments",
+  //         image: img2,
+  //         shortRole: "Product Manager",
+  //       },
+  //       {
+  //         name: "James Clear",
+  //         role: "Author of Atomic Habits",
+  //         image: img1,
+  //         shortRole: "Starbucks CEO",
+  //       },
+  //     ],
+  //     callToAction: "Sign Up To Practice Live",
+  //     sections: [
+  //       {
+  //         title: "Planning and Structuring Meetings",
+  //         lessons: [
+  //           {
+  //             title: "The Art of Meeting Planning",
+  //             type: "text",
+  //             content:
+  //               "This lesson covers the key components of effective meeting planning, from setting agendas to identifying objectives.",
+  //           },
+  //           {
+  //             title: "Setting Clear Objectives",
+  //             type: "video",
+  //             content: "https://www.example.com/video3.mp4", // Example video URL
+  //           },
+  //         ],
+  //       },
+  //       {
+  //         title: "Facilitating Effective Discussions",
+  //         lessons: [
+  //           {
+  //             title: "Managing Group Dynamics",
+  //             type: "audio",
+  //             content: "https://www.example.com/audio2.mp3", // Example audio URL
+  //           },
+  //           {
+  //             title: "Dealing with Conflict in Meetings",
+  //             type: "pdf",
+  //             content: "https://www.example.com/reading2.pdf", // Example PDF URL
+  //           },
+  //         ],
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     title: "Master Conflict Resolution",
+  //     duration: "18 min",
+  //     category: "Workplace Strategies",
+  //     professionals: [
+  //       {
+  //         name: "Susan Cain",
+  //         role: "Author of Quiet",
+  //         image: img1,
+  //         shortRole: "Starbucks CEO",
+  //       },
+  //       {
+  //         name: "Adam Grant",
+  //         role: "Organizational Psychologist",
+  //         image: img2,
+  //         shortRole: "Product Manager",
+  //       },
+  //     ],
+  //     callToAction: "Sign Up To Practice Live",
+  //     sections: [
+  //       {
+  //         title: "Understanding Conflict",
+  //         lessons: [
+  //           {
+  //             title: "Types of Conflict in the Workplace",
+  //             type: "text",
+  //             content:
+  //               "This lesson introduces the different types of conflict that can arise in a workplace setting.",
+  //           },
+  //           {
+  //             title: "Emotional Intelligence in Conflict Resolution",
+  //             type: "video",
+  //             content: "https://www.example.com/video4.mp4", // Example video URL
+  //           },
+  //         ],
+  //       },
+  //       {
+  //         title: "Advanced Conflict Resolution Skills",
+  //         lessons: [
+  //           {
+  //             title: "Effective Communication Techniques",
+  //             type: "audio",
+  //             content: "https://www.example.com/audio3.mp3", // Example audio URL
+  //           },
+  //           {
+  //             title: "Mediating Conflicts",
+  //             type: "pdf",
+  //             content: "https://www.example.com/reading3.pdf", // Example PDF URL
+  //           },
+  //         ],
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     title: "Celebrate Team Achievements",
+  //     duration: "19 min",
+  //     category: "Emotional Intelligence",
+  //     professionals: [
+  //       {
+  //         name: "Howard Schultz",
+  //         role: "Former Starbucks CEO",
+  //         image: img3,
+  //         shortRole: "Starbucks CEO",
+  //       },
+  //       {
+  //         name: "Elaine Welteroth",
+  //         role: "Multimedia Icon",
+  //         image: img2,
+  //         shortRole: "Product Manager",
+  //       },
+  //     ],
+  //     callToAction: "Sign Up To Practice Live",
+  //     sections: [
+  //       {
+  //         title: "Introduction to Team Building",
+  //         lessons: [
+  //           {
+  //             title: "What is Team Building?",
+  //             type: "text",
+  //             content:
+  //               "This lesson covers the fundamentals of team building, including the importance of collaboration and trust.",
+  //           },
+  //           {
+  //             title: "Understanding Emotional Intelligence",
+  //             type: "video",
+  //             content: "https://www.example.com/video1.mp4", // Example video URL
+  //           },
+  //           {
+  //             title: "Team Dynamics",
+  //             type: "audio",
+  //             content: "https://www.example.com/audio1.mp3", // Example audio URL
+  //           },
+  //         ],
+  //       },
+  //       {
+  //         title: "Advanced Team Strategies",
+  //         lessons: [
+  //           {
+  //             title: "Conflict Resolution in Teams",
+  //             type: "video",
+  //             content: "https://www.example.com/video2.mp4", // Example video URL
+  //           },
+  //           {
+  //             title: "Creating an Effective Team Culture",
+  //             type: "pdf",
+  //             content: "https://www.example.com/reading1.pdf", // Example PDF URL
+  //           },
+  //         ],
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     title: "Facilitate Successful Meetings",
+  //     duration: "22 min",
+  //     category: "Leadership Skills",
+  //     professionals: [
+  //       {
+  //         name: "Melody Hobson",
+  //         role: "President of Ariel Investments",
+  //         image: img2,
+  //         shortRole: "Product Manager",
+  //       },
+  //       {
+  //         name: "James Clear",
+  //         role: "Author of Atomic Habits",
+  //         image: img1,
+  //         shortRole: "Starbucks CEO",
+  //       },
+  //     ],
+  //     callToAction: "Sign Up To Practice Live",
+  //     sections: [
+  //       {
+  //         title: "Planning and Structuring Meetings",
+  //         lessons: [
+  //           {
+  //             title: "The Art of Meeting Planning",
+  //             type: "text",
+  //             content:
+  //               "This lesson covers the key components of effective meeting planning, from setting agendas to identifying objectives.",
+  //           },
+  //           {
+  //             title: "Setting Clear Objectives",
+  //             type: "video",
+  //             content: "https://www.example.com/video3.mp4", // Example video URL
+  //           },
+  //         ],
+  //       },
+  //       {
+  //         title: "Facilitating Effective Discussions",
+  //         lessons: [
+  //           {
+  //             title: "Managing Group Dynamics",
+  //             type: "audio",
+  //             content: "https://www.example.com/audio2.mp3", // Example audio URL
+  //           },
+  //           {
+  //             title: "Dealing with Conflict in Meetings",
+  //             type: "pdf",
+  //             content: "https://www.example.com/reading2.pdf", // Example PDF URL
+  //           },
+  //         ],
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     title: "Master Conflict Resolution",
+  //     duration: "18 min",
+  //     category: "Workplace Strategies",
+  //     professionals: [
+  //       {
+  //         name: "Susan Cain",
+  //         role: "Author of Quiet",
+  //         image: img1,
+  //         shortRole: "Starbucks CEO",
+  //       },
+  //       {
+  //         name: "Adam Grant",
+  //         role: "Organizational Psychologist",
+  //         image: img2,
+  //         shortRole: "Product Manager",
+  //       },
+  //     ],
+  //     callToAction: "Sign Up To Practice Live",
+  //     sections: [
+  //       {
+  //         title: "Understanding Conflict",
+  //         lessons: [
+  //           {
+  //             title: "Types of Conflict in the Workplace",
+  //             type: "text",
+  //             content:
+  //               "This lesson introduces the different types of conflict that can arise in a workplace setting.",
+  //           },
+  //           {
+  //             title: "Emotional Intelligence in Conflict Resolution",
+  //             type: "video",
+  //             content: "https://www.example.com/video4.mp4", // Example video URL
+  //           },
+  //         ],
+  //       },
+  //       {
+  //         title: "Advanced Conflict Resolution Skills",
+  //         lessons: [
+  //           {
+  //             title: "Effective Communication Techniques",
+  //             type: "audio",
+  //             content: "https://www.example.com/audio3.mp3", // Example audio URL
+  //           },
+  //           {
+  //             title: "Mediating Conflicts",
+  //             type: "pdf",
+  //             content: "https://www.example.com/reading3.pdf", // Example PDF URL
+  //           },
+  //         ],
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     title: "Celebrate Team Achievements",
+  //     duration: "19 min",
+  //     category: "Emotional Intelligence",
+  //     professionals: [
+  //       {
+  //         name: "Howard Schultz",
+  //         role: "Former Starbucks CEO",
+  //         image: img1,
+  //         shortRole: "Starbucks CEO",
+  //       },
+  //       {
+  //         name: "Elaine Welteroth",
+  //         role: "Multimedia Icon",
+  //         image: img2,
+  //         shortRole: "Product Manager",
+  //       },
+  //     ],
+  //     callToAction: "Sign Up To Practice Live",
+  //     sections: [
+  //       {
+  //         title: "Introduction to Team Building",
+  //         lessons: [
+  //           {
+  //             title: "What is Team Building?",
+  //             type: "text",
+  //             content:
+  //               "This lesson covers the fundamentals of team building, including the importance of collaboration and trust.",
+  //           },
+  //           {
+  //             title: "Understanding Emotional Intelligence",
+  //             type: "video",
+  //             content: "https://www.example.com/video1.mp4", // Example video URL
+  //           },
+  //           {
+  //             title: "Team Dynamics",
+  //             type: "audio",
+  //             content: "https://www.example.com/audio1.mp3", // Example audio URL
+  //           },
+  //         ],
+  //       },
+  //       {
+  //         title: "Advanced Team Strategies",
+  //         lessons: [
+  //           {
+  //             title: "Conflict Resolution in Teams",
+  //             type: "video",
+  //             content: "https://www.example.com/video2.mp4", // Example video URL
+  //           },
+  //           {
+  //             title: "Creating an Effective Team Culture",
+  //             type: "pdf",
+  //             content: "https://www.example.com/reading1.pdf", // Example PDF URL
+  //           },
+  //         ],
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     title: "Facilitate Successful Meetings",
+  //     duration: "22 min",
+  //     category: "Leadership Skills",
+  //     professionals: [
+  //       {
+  //         name: "Melody Hobson",
+  //         role: "President of Ariel Investments",
+  //         image: img3,
+  //         shortRole: "Product Manager",
+  //       },
+  //       {
+  //         name: "James Clear",
+  //         role: "Author of Atomic Habits",
+  //         image: img1,
+  //         shortRole: "Starbucks CEO",
+  //       },
+  //     ],
+  //     callToAction: "Sign Up To Practice Live",
+  //     sections: [
+  //       {
+  //         title: "Planning and Structuring Meetings",
+  //         lessons: [
+  //           {
+  //             title: "The Art of Meeting Planning",
+  //             type: "text",
+  //             content:
+  //               "This lesson covers the key components of effective meeting planning, from setting agendas to identifying objectives.",
+  //           },
+  //           {
+  //             title: "Setting Clear Objectives",
+  //             type: "video",
+  //             content: "https://www.example.com/video3.mp4", // Example video URL
+  //           },
+  //         ],
+  //       },
+  //       {
+  //         title: "Facilitating Effective Discussions",
+  //         lessons: [
+  //           {
+  //             title: "Managing Group Dynamics",
+  //             type: "audio",
+  //             content: "https://www.example.com/audio2.mp3", // Example audio URL
+  //           },
+  //           {
+  //             title: "Dealing with Conflict in Meetings",
+  //             type: "pdf",
+  //             content: "https://www.example.com/reading2.pdf", // Example PDF URL
+  //           },
+  //         ],
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     title: "Master Conflict Resolution",
+  //     duration: "18 min",
+  //     category: "Workplace Strategies",
+  //     professionals: [
+  //       {
+  //         name: "Susan Cain",
+  //         role: "Author of Quiet",
+  //         image: img3,
+  //         shortRole: "Starbucks CEO",
+  //       },
+  //       {
+  //         name: "Adam Grant",
+  //         role: "Organizational Psychologist",
+  //         image: img2,
+  //         shortRole: "Product Manager",
+  //       },
+  //     ],
+  //     callToAction: "Sign Up To Practice Live",
+  //     sections: [
+  //       {
+  //         title: "Understanding Conflict",
+  //         lessons: [
+  //           {
+  //             title: "Types of Conflict in the Workplace",
+  //             type: "text",
+  //             content:
+  //               "This lesson introduces the different types of conflict that can arise in a workplace setting.",
+  //           },
+  //           {
+  //             title: "Emotional Intelligence in Conflict Resolution",
+  //             type: "video",
+  //             content: "https://www.example.com/video4.mp4", // Example video URL
+  //           },
+  //         ],
+  //       },
+  //       {
+  //         title: "Advanced Conflict Resolution Skills",
+  //         lessons: [
+  //           {
+  //             title: "Effective Communication Techniques",
+  //             type: "audio",
+  //             content: "https://www.example.com/audio3.mp3", // Example audio URL
+  //           },
+  //           {
+  //             title: "Mediating Conflicts",
+  //             type: "pdf",
+  //             content: "https://www.example.com/reading3.pdf", // Example PDF URL
+  //           },
+  //         ],
+  //       },
+  //     ],
+  //   },
+  //   // Add additional courses here with sections and lessons as needed
+  // ];
   const navigate = useNavigate();
 
   const color = usePrimaryColorHex();
   const mobile = useIsMobile();
 
-  const [activePage, setActivePage] = useState(1);
-  const coursesPerPage = 6; // Set the number of courses per page
-  const totalPages = Math.ceil(carouselData.length / coursesPerPage); // Calculate the total number of pages
-
-  // Calculate the courses to display on the current page
-  const displayedCourses = carouselData.slice(
-    (activePage - 1) * coursesPerPage,
-    activePage * coursesPerPage
-  );
+  const [coursesData, setCoursesData] = useState<any>();
+  const [coursesCount, setCoursesCount] = useState<any>();
+  const route = useLocation();
+  const queryParams = new URLSearchParams(route.search);
+  const fetchedCourses = (activePage?: any) => {
+    GetService({
+      route: ApiRoutes.courses,
+      params: {
+        limit: 6,
+        page: activePage,
+      },
+    }).then((res: any) => {
+      setCoursesData(res.data.courses);
+      setCoursesCount(res.data.total);
+    });
+  };
+  useEffect(() => {
+    fetchedCourses(
+      queryParams?.get("page") !== null ? +queryParams?.get("page")! : 1
+    );
+  }, []);
+  const loadNextPage = ({ value }: { value: number }) => {
+    fetchedCourses(value);
+  };
 
   return (
     <Container size="lg" my="md" mt="xl">
       <Flex
-        justify="space-between"
+        justify={coursesData?.length > 3 ? "space-between" : undefined}
         wrap="wrap"
+        gap="md"
         direction={mobile ? "column" : undefined}
       >
-        {displayedCourses.map((item, index) => (
+        {coursesData?.map((item: any, index: any) => (
           <Paper
             mb="lg"
             w={mobile ? "100%" : "32%"}
@@ -1205,7 +1221,7 @@ export default function Courses() {
             <Stack>
               {/* Course Details */}
               <Text c="dimmed" size="xs">
-                {item.category} • {item.duration}
+                Emotional Intelligence • 19 min
               </Text>
               <Title order={3}>{item.title}</Title>
 
@@ -1222,7 +1238,7 @@ export default function Courses() {
                   slideGap="md"
                   loop
                 >
-                  {item.professionals.map((prof, i) => (
+                  {item?.instructors.map((prof: any, i: any) => (
                     <Carousel.Slide key={i}>
                       <Paper
                         withBorder
@@ -1299,9 +1315,9 @@ export default function Courses() {
                 gradient={{ from: "violet", to: "blue" }}
                 size="sm"
                 mt="md"
-                onClick={() => navigate("/courseDetails")}
+                onClick={() => navigate(`/courseDetails/${item.id}`)}
               >
-                {item.callToAction}
+                Sign Up To Practice Live
               </Button>
             </Stack>
           </Paper>
@@ -1310,17 +1326,7 @@ export default function Courses() {
 
       {/* Pagination */}
       <Flex justify="center" mb="xl">
-        <Pagination
-          radius="xl"
-          value={activePage}
-          onChange={(page) => {
-            setActivePage(page);
-            window.scrollTo({ top: 0, behavior: "smooth" }); // Smooth scrolling to the top
-          }}
-          total={totalPages}
-          siblings={1} // Adjust the number of sibling pages to show
-          style={{ marginTop: "20px", textAlign: "center" }}
-        />
+        <PaginationList count={coursesCount} loadNextPage={loadNextPage} />
       </Flex>
     </Container>
   );
