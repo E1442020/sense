@@ -58,7 +58,6 @@ export default function Ai() {
       },
       body: JSON.stringify({ message: userInput }),
     });
-
     if (!response.body) {
       console.error("No response body");
       return;

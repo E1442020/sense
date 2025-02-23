@@ -2,7 +2,7 @@ import axios from "axios";
 // import { logout } from "../../auth/slice/authSlice";
 import { Navigate } from "react-router-dom";
 
-export const HOSTNAME = "http://localhost:3000/";
+export const HOSTNAME = "http://95.216.195.92:3000/";
 
 const BASE_END_POINT = `${HOSTNAME}`;
 
